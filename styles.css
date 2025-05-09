@@ -194,7 +194,7 @@ main {
 }
 
 .search-container {
-    max-width: 600px;
+    max-width: 1004px;
     margin: 4rem auto;
     padding: 0 1rem;
 }
@@ -203,21 +203,22 @@ main {
     display: flex;
     gap: 1rem;
     margin-bottom: 2rem;
-    align-items: center;
 }
 
-#search-input {
+/* Style both search inputs */
+#search-input, #example-search-input {
     flex: 1;
-    padding: 1rem;
+    padding: 0.75rem;
     font-size: 1rem;
     border: 2px solid var(--primary-color);
     border-radius: 8px;
-    background-color: var(--card-background);
+    background-color: var(--input-background);
     color: var(--text-primary);
 }
 
-#search-button {
-    padding: 1rem 2rem;
+/* Style both search buttons */
+#search-button, #example-search-button {
+    padding: 0.75rem 2rem;
     background-color: var(--primary-color);
     color: white;
     border: none;
@@ -227,8 +228,8 @@ main {
     transition: background-color 0.3s ease;
 }
 
-#search-button:hover {
-    background-color: #357abd;
+#search-button:hover, #example-search-button:hover {
+    background-color: var(--primary-color-hover);
 }
 
 .results-container {
@@ -431,11 +432,14 @@ main {
 .example-card {
     background-color: var(--card-background);
     border-radius: 8px;
-    padding: 1rem;
-    margin-bottom: 1rem;
+    padding: 16px;
+    margin-bottom: 16px;
     box-shadow: var(--shadow);
-    transition: transform 0.2s ease;
+    transition: all 0.3s ease;
     position: relative;
+    width: 940px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .example-card:hover {
@@ -443,50 +447,71 @@ main {
     box-shadow: var(--shadow-hover);
 }
 
-.japanese-text {
-    font-size: 1.2rem;
+.example-card .japanese-text {
+    font-size: 1.5rem;
     margin-bottom: 0.5rem;
-    color: var(--text-color);
-    font-family: 'Noto Sans JP', sans-serif;
+    line-height: 2.4;
+    color: var(--text-primary);
 }
 
-.english-text {
-    color: var(--secondary-text);
-    font-size: 1rem;
+/* === Native Ruby Layout for Perfect Alignment === */
+.japanese-text ruby {
+    display: ruby;           /* use the browser’s built-in ruby engine */
+    ruby-position: over;     /* place the furigana above the base text */
+    ruby-align: center;      /* center the reading over its base */
+    white-space: nowrap;     /* keep each ruby chunk together */
+  }
+  
+  .japanese-text rt {
+    /* preserve your look: */
+    font-size: 0.5em;
+    line-height: 1;
+    color: var(--text-secondary);
+  }
+  
+  /* your long‐reading / too‐long tweaks still apply: */
+  .japanese-text rt.long-reading {
+    font-size: 0.45em;
+    letter-spacing: -0.05em;
+  }
+  
+  .japanese-text rt.too-long {
+    display: none;
+  }
+
+.example-card .english-text {
+    font-size: 1.1rem;
+    color: var(--text-secondary);
+    margin-bottom: 0.5rem;
     line-height: 1.4;
 }
 
-#example-search-input {
-    width: 100%;
-    padding: 0.8rem;
-    font-size: 1rem;
-    border: 2px solid var(--border-color);
+.example-card .attribution {
+    font-style: italic;
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    text-align: right;
+}
+
+#example-results {
+    margin-top: 1rem;
+}
+
+.loading {
+    text-align: center;
+    padding: 2rem;
+    color: var(--text-secondary);
+    font-style: italic;
+}
+
+.no-results {
+    text-align: center;
+    padding: 2rem;
+    color: var(--text-secondary);
+    font-style: italic;
+    background-color: var(--card-background);
     border-radius: 8px;
-    background-color: var(--input-background);
-    color: var(--text-color);
-    transition: border-color 0.3s ease;
-    margin-bottom: 1rem;
-}
-
-#example-search-input:focus {
-    outline: none;
-    border-color: var(--primary-color);
-    box-shadow: 0 0 0 2px rgba(74, 144, 226, 0.1);
-}
-
-#example-search-button {
-    padding: 0.8rem 1.5rem;
-    font-size: 1rem;
-    background-color: var(--primary-color);
-    color: white;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-}
-
-#example-search-button:hover {
-    background-color: var(--primary-color-hover);
+    margin-top: 1rem;
 }
 
 @media (max-width: 768px) {

@@ -1,7 +1,27 @@
 [
   {
-    "word": "さっさと",
-    "reading": "さっさと",
-    "meaning": "quickly, promptly, immediately, without delay, briskly, hurriedly, hastily"
+    "word": "発電機",
+    "reading": "はつでんき",
+    "meaning": "dynamo, power generator"
+  },
+  {
+    "word": "丈夫",
+    "reading": "じょうぶ",
+    "meaning": "healthy, robust, strong, solid, durable"
+  },
+  {
+    "word": "針金",
+    "reading": "はりがね",
+    "meaning": "wire"
+  },
+  {
+    "word": "消火器",
+    "reading": "しょうかき",
+    "meaning": "fire extinguisher"
+  },
+  {
+    "word": "手に入る",
+    "reading": "てにはいる",
+    "meaning": "to obtain, to come into possession of, to get hold of, to get one's hands on"
   }
 ]

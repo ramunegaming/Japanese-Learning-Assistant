@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Japanese Learning Assistant</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <!-- Add Kuroshiro scripts -->
+    <script src="https://unpkg.com/kuroshiro@1.2.0/dist/kuroshiro.min.js"></script>
+    <script src="https://unpkg.com/kuroshiro-analyzer-kuromoji@1.1.0/dist/kuroshiro-analyzer-kuromoji.min.js"></script>
+</head>
+<body>
+    <header class="app-header">
+        <div class="logo">
+            <span class="logo-text">日本語</span>
+            <span class="logo-subtext">Learning Assistant</span>
+        </div>
+        <div class="theme-toggle-wrapper">
+            <button id="theme-toggle" class="theme-toggle" aria-label="Toggle theme">
+                <i class="fas fa-lightbulb"></i>
+            </button>
+        </div>
+    </header>
+
+    <nav>
+        <div class="nav-container">
+            <a href="#" class="nav-item active" data-page="search">
+                <i class="fas fa-magnifying-glass"></i>
+                Search
+            </a>
+            <a href="#" class="nav-item" data-page="examples">
+                <i class="fas fa-align-left"></i>
+                Sentence Examples
+            </a>
+            <a href="#" class="nav-item" data-page="history">
+                <i class="fas fa-clock-rotate-left"></i>
+                History
+            </a>
+            <a href="#" class="nav-item" data-page="favorites">
+                <i class="fas fa-heart"></i>
+                Favorites
+            </a>
+        </div>
+    </nav>
+
+    <main>
+        <div id="search-page" class="page active">
+            <div class="search-container">
+                <div class="search-box">
+                    <input type="text" id="search-input" placeholder="Enter Japanese or English...">
+                    <button id="search-button">Search</button>
+                </div>
+                <div id="search-results" class="results-container"></div>
+            </div>
+        </div>
+
+        <div id="examples-page" class="page">
+            <div class="search-container">
+                <div class="search-box">
+                    <input type="text" id="example-search-input" placeholder="Enter Japanese or English...">
+                    <button id="example-search-button">Search</button>
+                </div>
+                <div id="example-results" class="results-container"></div>
+            </div>
+        </div>
+
+        <div id="history-page" class="page">
+            <div id="history-list" class="results-container"></div>
+        </div>
+
+        <div id="favorites-page" class="page">
+            <div id="favorites-list" class="results-container"></div>
+        </div>
+    </main>
+
+    <script src="app.js"></script>
+    <script type="module" src="examples.js"></script>
+</body>
+</html>

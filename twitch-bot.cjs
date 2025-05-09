@@ -1,14 +1,16 @@
 require('dotenv').config();
 const express = require('express');
 const cheerio = require('cheerio');
-const fetch = require('node-fetch');
+const fetch = require('node-fetch').default;
 const cors = require('cors');
 const fs = require('fs').promises;
 const path = require('path');
 const tmi = require('tmi.js');
+const userMessageCount = {};
 
 const app = express();
 const PORT = 3001;
+const DATA_FILE = path.join(__dirname, 'favorites.json');
 
 // Enable CORS for all routes
 app.use(cors());
@@ -22,23 +24,22 @@ app.use(express.json());
 // Function to load favorites from file
 async function loadFavorites() {
     try {
-        // Read the file fresh each time
-        const data = await fs.readFile('favorites.json', 'utf8');
-        return JSON.parse(data);
+      const raw = await fs.readFile(DATA_FILE, 'utf8');
+      return JSON.parse(raw);
     } catch (error) {
-        if (error.code === 'ENOENT') {
-            // If file doesn't exist, create it with empty array
-            await fs.writeFile('favorites.json', '[]');
-            return [];
-        }
-        console.error('Error loading favorites:', error);
-        return [];
+      if (error.code === 'ENOENT') {
+        // Create file and treat as “no favorites yet”
+        await fs.writeFile(DATA_FILE, '[]');
+        return [];                // ← bail out early for ENOENT
+      }
+      console.error('Error loading favorites:', error);
+      return [];
     }
-}
+  }
 
 // Function to save favorites to file
 async function saveFavorites(favorites) {
-    await fs.writeFile('favorites.json', JSON.stringify(favorites, null, 2));
+    await fs.writeFile(DATA_FILE, JSON.stringify(favorites, null, 2));
 }
 
 // Endpoint to search for sentences
@@ -150,28 +151,6 @@ app.delete('/api/favorites/:word', async (req, res) => {
     }
 });
 
-// Endpoint to remove a favorite
-app.post('/api/favorites/remove', async (req, res) => {
-    try {
-        console.log('Removing favorite:', req.body.word); // Debug log
-        const { word } = req.body;
-        if (!word) {
-            return res.status(400).json({ error: 'Word is required' });
-        }
-
-        const favorites = await loadFavorites();
-        console.log('Current favorites:', favorites); // Debug log
-        const updatedFavorites = favorites.filter(fav => fav.word !== word);
-        console.log('Updated favorites:', updatedFavorites); // Debug log
-
-        await fs.writeFile('favorites.json', JSON.stringify(updatedFavorites, null, 2));
-        res.json({ success: true, updatedFavorites });
-    } catch (error) {
-        console.error('Error removing favorite:', error);
-        res.status(500).json({ error: 'Failed to remove favorite' });
-    }
-});
-
 // Add this new endpoint to sync favorites
 app.post('/api/favorites/sync', async (req, res) => {
     try {
@@ -180,7 +159,7 @@ app.post('/api/favorites/sync', async (req, res) => {
             return res.status(400).json({ error: 'Favorites must be an array' });
         }
 
-        await fs.writeFile('favorites.json', JSON.stringify(favorites, null, 2));
+        await fs.writeFile(DATA_FILE, JSON.stringify(favorites, null, 2));
         res.json({ success: true });
     } catch (error) {
         console.error('Error syncing favorites:', error);
@@ -192,22 +171,165 @@ app.post('/api/favorites/sync', async (req, res) => {
 const client = new tmi.Client({
     options: { debug: true },
     identity: {
-        username: 'ramunegaming',
-        password: process.env.TWITCH_OAUTH || 'oauth:' // Use environment variable for security
+        username: 'ramunebot',
+        password: process.env.TWITCH_OAUTH
     },
-    channels: ['ramunegaming']
+    channels: ['#ramunegaming']
 });
 
-// Connect to Twitch and handle connection events
-client.connect().catch(console.error);
+// Bot command handlers
+const handleJishoCommand = async (channel, tags, message) => {
+    try {
+        const args = message.slice(7).trim(); // Remove "!jisho " from message
+        if (!args) {
+            client.say(channel, "Please provide a word to search! Usage: !jisho [word]");
+            return;
+        }
 
-client.on('connected', (addr, port) => {
-    console.log(`* Connected to ${addr}:${port}`);
-});
+        // Search for the word using the Jisho API
+        const response = await fetch(`https://jisho.org/api/v1/search/words?keyword=${encodeURIComponent(args)}`);
+        const data = await response.json();
 
-client.on('disconnected', (reason) => {
-    console.log(`* Disconnected: ${reason}`);
-});
+        if (data.data && data.data.length > 0) {
+            const result = data.data[0];
+            const reading = result.japanese[0].reading || result.japanese[0].word || 'N/A';
+            const meaning = result.senses[0].english_definitions.join(', ');
+            client.say(channel, `${args}: ${reading} - ${meaning}`);
+        } else {
+            client.say(channel, `No results found for "${args}"`);
+        }
+    } catch (error) {
+        console.error('Error in !jisho command:', error);
+        client.say(channel, "Sorry, there was an error processing your request.");
+    }
+};
+
+const handleJapaneseTodayCommand = async (channel) => {
+    try {
+        const favorites = await loadFavorites();
+        if (favorites.length === 0) {
+            client.say(channel, 'No Japanese words saved yet!');
+            return;
+        }
+
+        const recentFavorites = favorites.slice(-5);
+        const processedFavorites = await Promise.all(recentFavorites.map(async fav => {
+            const shortUrl = await shortenJishoUrl(fav.word);
+            const cleanMeaning = fav.meaning.replace(/\s*\([^)]*\)/g, '').replace(/\s+/g, ' ').trim();
+            return { ...fav, shortUrl, cleanMeaning };
+        }));
+
+        const wordList = processedFavorites
+            .map(fav => {
+                const wordDisplay = containsKanji(fav.word) ? 
+                    `${fav.word} (${fav.reading})` : 
+                    fav.word;
+                return `${wordDisplay} ${fav.cleanMeaning}: ${fav.shortUrl}`;
+            })
+            .join(' || ');
+
+        client.say(channel, `Latest Japanese Words: ${wordList}`);
+    } catch (error) {
+        console.error('Error in japanesetoday command:', error);
+        client.say(channel, 'Sorry, something went wrong!');
+    }
+};
+
+const handleQuizCommand = async (channel) => {
+    try {
+        const favorites = await loadFavorites();
+        if (favorites.length === 0) {
+            client.say(channel, 'No Japanese words available for quiz! Add some words first using the website.');
+            return;
+        }
+
+        const correctWord = favorites[Math.floor(Math.random() * favorites.length)];
+        const wrongOptions = await getWrongOptions(correctWord.meaning);
+        const options = shuffleArray([
+            { ...correctWord, isCorrect: true },
+            ...wrongOptions.map(opt => ({ ...opt, isCorrect: false }))
+        ]);
+
+        currentQuiz = {
+            word: correctWord.word,
+            reading: correctWord.reading,
+            correctAnswer: options.findIndex(opt => opt.isCorrect),
+            options: options
+        };
+
+        const optionsText = options
+            .map((opt, index) => `${String.fromCharCode(97 + index)}) ${opt.meaning}`)
+            .join(' ');
+
+        client.say(channel, `Quiz Time! Which of the following words means '${correctWord.reading} (${correctWord.word})'? ${optionsText}`);
+    } catch (error) {
+        console.error('Error in quiz command:', error);
+        client.say(channel, 'Sorry, something went wrong with the quiz!');
+    }
+};
+
+const handleHelpCommand = (channel) => {
+    const commands = [
+        '!jisho [word] - Search for Japanese word meanings',
+        '!japanesetoday - Show recent Japanese words',
+        '!quiz - Start a Japanese word quiz',
+        '!discord - Get Discord server link',
+        '!help - Show this help message'
+    ];
+    client.say(channel, `Available commands: ${commands.join(' | ')}`);
+};
+
+// Single message event handler for all commands
+client.on('message', async (channel, tags, message, self) => {
+    if (self) return;
+  
+    // --- Activity tracking (migrate your messageCreate code here) ---
+    const username = tags.username;
+    const now = Date.now();
+    userMessageCount[username] = (userMessageCount[username] || [])
+      .concat(now)
+      .filter(ts => ts > now - 15 * 60 * 1000);
+  
+    // --- Command handling ---
+    const lower = message.toLowerCase();
+  
+    if (currentQuiz && /^[abc]$/.test(lower)) {
+      const userAnswer = lower.charCodeAt(0) - 97;
+      const isCorrect = userAnswer === currentQuiz.correctAnswer;
+      client.say(channel, `@${tags.username} ${isCorrect ? 'Correct!' : 'Try again next time!'}`);
+      currentQuiz = null;
+      return;
+    }
+  
+    if (lower.startsWith('!jisho ')) {
+      await handleJishoCommand(channel, tags, message);
+    } else {
+      switch (lower) {
+        case '!help':
+          handleHelpCommand(channel);
+          break;
+        case '!japanesetoday':
+          await handleJapaneseTodayCommand(channel);
+          break;
+        case '!quiz':
+          await handleQuizCommand(channel);
+          break;
+        case '!discord':
+          client.say(channel, "🎉 Join us on Discord: https://discord.gg/RaDBSntRZh");
+          break;
+      }
+    }
+  });
+
+// Connect to Twitch
+console.log('→ connecting to Twitch as', client.getOptions().identity.username);
+client.connect()
+.then(() => {
+    console.log('✅ Twitch client connected as', client.getOptions().identity.username);
+  })
+  .catch(err => {
+    console.error('❌ Failed to connect to Twitch:', err);
+  });
 
 // Quiz state management
 let currentQuiz = null;
@@ -409,125 +531,39 @@ function containsKanji(str) {
     return /[\u4E00-\u9FAF]/.test(str);
 }
 
-// Handle !japanesetoday command
-client.on('message', async (channel, tags, message, self) => {
-    if (self) return;
-
-    // Handle different commands
-    switch (message.toLowerCase()) {
-        case '!japanesetoday':
-            try {
-                // Always load fresh favorites
-                const favorites = await loadFavorites();
-                if (favorites.length === 0) {
-                    client.say(channel, 'No Japanese words saved yet!');
-                    return;
-                }
-
-                // Get the last 5 favorites (or all if less than 5)
-                const recentFavorites = favorites.slice(-5);
-                
-                // Process all URLs first
-                const processedFavorites = await Promise.all(recentFavorites.map(async fav => {
-                    const shortUrl = await shortenJishoUrl(fav.word);
-                    const cleanMeaning = fav.meaning.replace(/\s*\([^)]*\)/g, '').replace(/\s+/g, ' ').trim();
-                    return {
-                        ...fav,
-                        shortUrl,
-                        cleanMeaning
-                    };
-                }));
-
-                const wordList = processedFavorites
-                    .map(fav => {
-                        // Only include reading in parentheses if the word contains kanji
-                        const wordDisplay = containsKanji(fav.word) ? 
-                            `${fav.word} (${fav.reading})` : 
-                            fav.word;
-                        return `${wordDisplay} ${fav.cleanMeaning}: ${fav.shortUrl}`;
-                    })
-                    .join(' || ');
-
-                client.say(channel, `Latest Japanese Words: ${wordList}`);
-            } catch (error) {
-                console.error('Error handling Twitch command:', error);
-                client.say(channel, 'Sorry, something went wrong!');
-            }
-            break;
-
-        case '!discord':
-            // Discord invitation message
-            const discordMessage = "🎉 Join Our Community on Discord! 🎮 " +
-                "Looking for a place to hang out, share laughs, and catch all the latest updates? " +
-                "Come join our awesome community! Chat with fellow viewers, interact with immersive channels, and be part of the action. " +
-                "Hop in here: https://discord.gg/RaDBSntRZh";
-            client.say(channel, discordMessage);
-            break;
-
-        // Handle quiz answers
-        default:
-            if (currentQuiz && /^[abc]$/.test(message.toLowerCase())) {
-                const userAnswer = message.toLowerCase().charCodeAt(0) - 97; // Convert a/b/c to 0/1/2
-                const isCorrect = userAnswer === currentQuiz.correctAnswer;
-                
-                if (isCorrect) {
-                    client.say(channel, `@${tags.username} Correct, good job!`);
-                } else {
-                    client.say(channel, `@${tags.username} Maybe next time!`);
-                }
-                
-                // Clear current quiz after someone answers
-                currentQuiz = null;
-            }
-            break;
-    }
-});
-
-// Handle !quiz command
-client.on('message', async (channel, tags, message, self) => {
-    if (self) return;
-    if (message.toLowerCase() === '!quiz') {
-        try {
-            const favorites = await loadFavorites();
-            if (favorites.length === 0) {
-                client.say(channel, 'No Japanese words available for quiz! Add some words first using the website.');
-                return;
-            }
-
-            // Select random word from favorites as the question
-            const correctWord = favorites[Math.floor(Math.random() * favorites.length)];
-            
-            // Get wrong options with fallback support
-            const wrongOptions = await getWrongOptions(correctWord.meaning);
-            
-            // Combine with correct answer and shuffle
-            const options = shuffleArray([
-                { ...correctWord, isCorrect: true },
-                ...wrongOptions.map(opt => ({ ...opt, isCorrect: false }))
-            ]);
-            
-            // Store current quiz state
-            currentQuiz = {
-                word: correctWord.word,
-                reading: correctWord.reading,
-                correctAnswer: options.findIndex(opt => opt.isCorrect),
-                options: options
-            };
-
-            // Format quiz message
-            const optionsText = options
-                .map((opt, index) => `${String.fromCharCode(97 + index)}) ${opt.meaning}`)
-                .join(' ');
-
-            client.say(channel, `Quiz Time! Which of the following words means '${correctWord.reading} (${correctWord.word})'? ${optionsText}`);
-        } catch (error) {
-            console.error('Error generating quiz:', error);
-            client.say(channel, 'Sorry, something went wrong with the quiz!');
+// define your messages in one array:
+const timerMessages = [
+    'Enjoying the stream? Check out the Discord! https://discord.gg/RaDBSntRZh',
+    'Like what you see? Hit that follow button! ❤️',
+    'Check out my YouTube content! 🎥 https://www.youtube.com/@RamuneGaming',
+    'Use !commands to see all the fun things you can do in chat!',
+    'Clip epic moments and share the hype! 🎬'
+  ];
+  
+  /**
+   * One self-rescheduling timer that picks a random message every interval.
+   */
+  function createRandomReminder(client, channel, messages, intervalMs) {
+    setTimeout(async () => {
+      try {
+        const res  = await fetch(`https://tmi.twitch.tv/group/user/ramunegaming/chatters`);
+        const data = await res.json();
+        const allChatters = Object.values(data.chatters).flat();
+        if (allChatters.length >= 3) {
+          const msg = messages[Math.floor(Math.random() * messages.length)];
+          client.say(channel, msg);
         }
-    }
-});
-
-// Start the server
-app.listen(PORT, () => {
-    console.log(`Server is running on port ${PORT}`);
-});
+      } catch (err) {
+        console.error('Error in reminder:', err);
+      }
+      // schedule next
+      createRandomReminder(client, channel, messages, intervalMs);
+    }, intervalMs);
+  }
+  
+  // *** Single connected listener ***
+  client.on('connected', (addr, port) => {
+    console.log(`Connected as ramunebot to ${addr}:${port}`);
+    // start the 20-minute looping reminder:
+    createRandomReminder(client, '#ramunegaming', timerMessages, 20 * 60_000);
+  });

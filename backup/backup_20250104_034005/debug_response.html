@@ -1,0 +1,1019 @@
+<!DOCTYPE html>
+<html data-color-theme="auto">
+  <head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+    <meta name="apple-mobile-web-app-title" content="Jisho">
+    <meta name="theme-color" content="#47DB27">
+    <link href="/opensearch.xml" rel='search' title='Jisho' type='application/opensearchdescription+xml'>
+    <link rel="icon" href="https://assets.jisho.org/assets/touch-icon-017b99ca4bfd11363a97f66cc4c00b1667613a05e38d08d858aa5e2a35dce055.png">
+    <link rel="apple-touch-icon" href="https://assets.jisho.org/assets/touch-icon-017b99ca4bfd11363a97f66cc4c00b1667613a05e38d08d858aa5e2a35dce055.png">
+    <script>
+
+/* Modernizr 2.6.2 (Custom Build) | MIT & BSD
+ * Build: http://modernizr.com/download/#-touch-cssclasses-addtest-prefixed-teststyles-testprop-testallprops-prefixes-domprefixes
+ */
+;window.Modernizr=function(a,b,c){function z(a){j.cssText=a}function A(a,b){return z(m.join(a+";")+(b||""))}function B(a,b){return typeof a===b}function C(a,b){return!!~(""+a).indexOf(b)}function D(a,b){for(var d in a){var e=a[d];if(!C(e,"-")&&j[e]!==c)return b=="pfx"?e:!0}return!1}function E(a,b,d){for(var e in a){var f=b[a[e]];if(f!==c)return d===!1?a[e]:B(f,"function")?f.bind(d||b):f}return!1}function F(a,b,c){var d=a.charAt(0).toUpperCase()+a.slice(1),e=(a+" "+o.join(d+" ")+d).split(" ");return B(b,"string")||B(b,"undefined")?D(e,b):(e=(a+" "+p.join(d+" ")+d).split(" "),E(e,b,c))}var d="2.6.2",e={},f=!0,g=b.documentElement,h="modernizr",i=b.createElement(h),j=i.style,k,l={}.toString,m=" -webkit- -moz- -o- -ms- ".split(" "),n="Webkit Moz O ms",o=n.split(" "),p=n.toLowerCase().split(" "),q={},r={},s={},t=[],u=t.slice,v,w=function(a,c,d,e){var f,i,j,k,l=b.createElement("div"),m=b.body,n=m||b.createElement("body");if(parseInt(d,10))while(d--)j=b.createElement("div"),j.id=e?e[d]:h+(d+1),l.appendChild(j);return f=["&#173;",'<style id="s',h,'">',a,"</style>"].join(""),l.id=h,(m?l:n).innerHTML+=f,n.appendChild(l),m||(n.style.background="",n.style.overflow="hidden",k=g.style.overflow,g.style.overflow="hidden",g.appendChild(n)),i=c(l,a),m?l.parentNode.removeChild(l):(n.parentNode.removeChild(n),g.style.overflow=k),!!i},x={}.hasOwnProperty,y;!B(x,"undefined")&&!B(x.call,"undefined")?y=function(a,b){return x.call(a,b)}:y=function(a,b){return b in a&&B(a.constructor.prototype[b],"undefined")},Function.prototype.bind||(Function.prototype.bind=function(b){var c=this;if(typeof c!="function")throw new TypeError;var d=u.call(arguments,1),e=function(){if(this instanceof e){var a=function(){};a.prototype=c.prototype;var f=new a,g=c.apply(f,d.concat(u.call(arguments)));return Object(g)===g?g:f}return c.apply(b,d.concat(u.call(arguments)))};return e}),q.touch=function(){var c;return"ontouchstart"in a||a.DocumentTouch&&b instanceof DocumentTouch?c=!0:w(["@media (",m.join("touch-enabled),("),h,")","{#modernizr{top:9px;position:absolute}}"].join(""),function(a){c=a.offsetTop===9}),c};for(var G in q)y(q,G)&&(v=G.toLowerCase(),e[v]=q[G](),t.push((e[v]?"":"no-")+v));return e.addTest=function(a,b){if(typeof a=="object")for(var d in a)y(a,d)&&e.addTest(d,a[d]);else{a=a.toLowerCase();if(e[a]!==c)return e;b=typeof b=="function"?b():b,typeof f!="undefined"&&f&&(g.className+=" "+(b?"":"no-")+a),e[a]=b}return e},z(""),i=k=null,e._version=d,e._prefixes=m,e._domPrefixes=p,e._cssomPrefixes=o,e.testProp=function(a){return D([a])},e.testAllProps=F,e.testStyles=w,e.prefixed=function(a,b,c){return b?F(a,b,c):F(a,"pfx")},g.className=g.className.replace(/(^|\s)no-js(\s|$)/,"$1$2")+(f?" js "+t.join(" "):""),e}(this,this.document);
+
+</script>
+
+<script>
+
+  Modernizr.addTest('speech', function(){
+    return Modernizr.prefixed('speechRecognition', window);
+  });
+
+  Modernizr.addTest('AudioContext', function(){
+    return Modernizr.prefixed('AudioContext', window);
+  });
+
+  Modernizr.addTest('getUserMedia', function(){
+    return Modernizr.prefixed('getUserMedia', navigator);
+  });
+
+</script>
+
+    <link rel="stylesheet" media="screen" href="https://assets.jisho.org/assets/application-61d8e80944056be2e8c772e3d3b243767cc3550ca5b7da4d62ba58a5604fc3c3.css" />
+    <meta name="csrf-param" content="authenticity_token" />
+<meta name="csrf-token" content="l5hJO5BDmHw7sjcu8hOco2o4IqAZ6HrquFnpBUBHbKdmGQDw9UHv7zdHWz0UORh81jPpJhmSsUWhlBYzYvn4Og==" />
+    
+    <link rel="shortcut icon" type="image/x-icon" href="https://assets.jisho.org/assets/favicon-062c4a0240e1e6d72c38aa524742c2d558ee6234497d91dd6b75a182ea823d65.ico" />
+    <title>猫 #sentences - Jisho.org</title>
+    <meta name="Description" content="Japanese dictionary search results for 猫 #sentences.">
+      <meta name="twitter:card" content="summary" />
+      <meta name="twitter:site" content="@jisho" />
+      <meta name="twitter:title" content="Japanese dictionary search for &quot;猫 #sentences&quot;" />
+      <meta name="twitter:description" content="405 sentences found. See the full details ..." />
+  </head>
+  <body class=" highlight_keyword highlight_common_readings highlight_common_representations production">
+    
+<header class="row collapse">
+  <div class="small-4 columns">
+    <h1 class="logo"><a href="/">Jisho</a></h1>
+  </div>
+  <div class="small-8 columns">
+    <nav class="nav-main_navigation">
+  <ul class="links">
+    <li><a href="/forum">Forum</a></li>
+    <li><a href="/about">About</a></li>
+    <li>
+      <div class="color_theme_picker--wrapper">
+        <a href="#">Theme</a>
+        <ul class="color_theme_picker--choices">
+          <li><a href="/search/%E7%8C%AB%20%23sentences?color_theme=light&amp;exact=false&amp;original_keyword=%E7%8C%AB+%23sentences">Light mode</a></li>
+          <li><a href="/search/%E7%8C%AB%20%23sentences?color_theme=dark&amp;exact=false&amp;original_keyword=%E7%8C%AB+%23sentences">Dark mode</a></li>
+          <li><div>Auto</div></li>
+        </ul>
+      </div>
+    </li> 
+    <li>
+      <div id="login_link">
+          <a href="/auth/auth0">Log in / Sign up</a>
+      </div>
+    </li>
+  </ul>
+</nav>
+
+  </div>
+</header>
+
+    <div class="row collapse">
+      <div class="large-12 columns">
+        <form class="search" data-live="false" id="search" action="/search" accept-charset="UTF-8" method="get"><input name="utf8" type="hidden" value="&#x2713;" />  <div id="input_methods" class="input_methods">
+    <div class="input_method_button disable-mobile-hover-background" id="handwriting_button">
+      <svg viewBox="0 0 30 30" class="icon tablet-icon ">
+  <use xlink:href="https://jisho.org/assets/icons-ab7975eb6f8bb532f99ba2d769be43c5431dec4c0e4d220df7367f1d954d9424.svg#tablet"></use>
+</svg>
+
+      <h4>Draw</h4>
+    </div>
+    <div class="input_method_button disable-mobile-hover-background" id="radical_button">
+      <svg viewBox="0 0 30 30" class="icon radical-icon ">
+  <use xlink:href="https://jisho.org/assets/icons-ab7975eb6f8bb532f99ba2d769be43c5431dec4c0e4d220df7367f1d954d9424.svg#radical"></use>
+</svg>
+
+      <h4>Radicals</h4>
+    </div>
+    <div class="input_method_button disable-mobile-hover-background" id="speech_button">
+      <svg viewBox="0 0 30 30" class="icon speech-icon ">
+  <use xlink:href="https://jisho.org/assets/icons-ab7975eb6f8bb532f99ba2d769be43c5431dec4c0e4d220df7367f1d954d9424.svg#speech"></use>
+</svg>
+
+      <h4>Voice</h4>
+    </div>
+  </div>
+  <div class="overlay">
+    <div id="search_main" class="main">
+      <div class="inner">
+        <div id="advanced_button" class="search_type">
+          <span class="text" id="search_dropdown_text">Sentences</span>
+          <span class="carat">▾</span>
+        </div>
+        <button type="submit" class="submit icon" tabindex="2">
+          <svg viewBox="0 0 30 30" class="icon search-icon ">
+  <use xlink:href="https://jisho.org/assets/icons-ab7975eb6f8bb532f99ba2d769be43c5431dec4c0e4d220df7367f1d954d9424.svg#search"></use>
+</svg>
+
+        </button>
+        <a class="search-form_clear-button_js search-form_clear-button icon" accesskey="1" tabindex="3">
+          <svg viewBox="0 0 30 30" class="icon clear-icon ">
+  <use xlink:href="https://jisho.org/assets/icons-ab7975eb6f8bb532f99ba2d769be43c5431dec4c0e4d220df7367f1d954d9424.svg#clear"></use>
+</svg>
+
+        </a>
+
+        <div class="text_input">
+          <div class="hidden range"></div>
+          <input
+            type="text"
+            class="keyword japanese_gothic"
+            name="keyword"
+            id="keyword"
+            value="猫 #sentences"
+            tabindex="1"
+            lang="ja"
+            autocapitalize="off"
+            autocomplete="off"
+            autocorrect="off"
+            spellcheck="false"
+            placeholder="English, Japanese, Romaji, words or text"
+            data-autoload="true"
+            data-effective-keyword="actual"
+          />
+        </div>
+      </div>
+      <div id="search_sub" class="sub">
+        <div id="radical_area" class="area radical">
+  <div class="results_wrapper">
+  <div class="results">
+    <div class="list">
+      <div class="instructions">
+        <div class="vertical-bottom">
+          <div class="vertical-bottom-inner">
+            
+    <div class="arrow">▾</div>
+    <div class="text">
+      Find kanji by their parts. Click on
+      <svg viewBox="0 0 30 30" class="icon reset-icon inline">
+  <use xlink:href="https://jisho.org/assets/icons-ab7975eb6f8bb532f99ba2d769be43c5431dec4c0e4d220df7367f1d954d9424.svg#reset"></use>
+</svg>
+
+      to reset radicals.
+    </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="show_more">More</div>
+    <div class="show_less link">Less</div>
+  </div>
+  <div class="scroll_indicator show-for-small-only"></div>
+</div>
+  <!-- <p>
+  Click on the parts that are in the kanji you are looking for. You can click on them again to de-select them.
+  <input type="button" value="Reset" id="reset_button" onclick='Radicals.reset()' />
+</p> -->
+
+<ul class="radical_table clearfix" lang="ja">
+  <li class="reset_icon_list_item">
+    <svg viewBox="0 0 30 30" class="icon reset-icon reset_radicals" title="Reset selection">
+  <use xlink:href="https://jisho.org/assets/icons-ab7975eb6f8bb532f99ba2d769be43c5431dec4c0e4d220df7367f1d954d9424.svg#reset"></use>
+</svg>
+
+  </li>
+  <li class="number">1</li>
+  <li class="radical" data-radical="1">一</li>
+  <li class="radical" data-radical="2">｜</li>
+  <li class="radical" data-radical="3">丶</li>
+  <li class="radical" data-radical="4">ノ</li>
+  <li class="radical" data-radical="5">乙</li>
+  <li class="radical" data-radical="6">亅</li>
+  <li class="number">2</li>
+  <li class="radical" data-radical="7">二</li>
+  <li class="radical" data-radical="8">亠</li>
+  <li class="radical" data-radical="9">人</li>
+  <li class="radical radical-image radical-10" data-radical="10" data-radk="化">⺅</li>
+  <li class="radical radical-image radical-11" data-radical="11" data-radk="个">𠆢</li>
+  <li class="radical" data-radical="12">儿</li>
+  <li class="radical" data-radical="13">入</li>
+  <li class="radical" data-radical="14">ハ</li>
+  <li class="radical radical-image radical-15" data-radical="15" data-radk="并">丷</li>
+  <li class="radical" data-radical="16">冂</li>
+  <li class="radical" data-radical="17">冖</li>
+  <li class="radical" data-radical="18">冫</li>
+  <li class="radical" data-radical="19">几</li>
+  <li class="radical" data-radical="20">凵</li>
+  <li class="radical" data-radical="21">刀</li>
+  <li class="radical radical-image radical-22" data-radical="22" data-radk="刈">⺉</li>
+  <li class="radical" data-radical="23">力</li>
+  <li class="radical" data-radical="24">勹</li>
+  <li class="radical" data-radical="25">匕</li>
+  <li class="radical" data-radical="26">匚</li>
+  <li class="radical" data-radical="27">十</li>
+  <li class="radical" data-radical="28">卜</li>
+  <li class="radical" data-radical="29">卩</li>
+  <li class="radical" data-radical="30">厂</li>
+  <li class="radical" data-radical="31">厶</li>
+  <li class="radical" data-radical="32">又</li>
+  <li class="radical" data-radical="33">マ</li>
+  <li class="radical" data-radical="34">九</li>
+  <li class="radical" data-radical="35">ユ</li>
+  <li class="radical" data-radical="36">乃</li>
+  <li class="radical" data-radical="360" data-radk="乞">𠂉</li>
+  <li class="number">3</li>
+  <li class="radical radical-image radical-37" data-radical="37" data-radk="込">⻌</li>
+  <li class="radical" data-radical="38">口</li>
+  <li class="radical" data-radical="39">囗</li>
+  <li class="radical" data-radical="40">土</li>
+  <li class="radical" data-radical="41">士</li>
+  <li class="radical" data-radical="42">夂</li>
+  <li class="radical" data-radical="43">夕</li>
+  <li class="radical" data-radical="44">大</li>
+  <li class="radical" data-radical="45">女</li>
+  <li class="radical" data-radical="46">子</li>
+  <li class="radical" data-radical="47">宀</li>
+  <li class="radical" data-radical="48">寸</li>
+  <li class="radical" data-radical="49">小</li>
+  <li class="radical radical-image radical-50" data-radical="50" data-radk="尚">⺌</li>
+  <li class="radical" data-radical="51">尢</li>
+  <li class="radical" data-radical="52">尸</li>
+  <li class="radical" data-radical="53">屮</li>
+  <li class="radical" data-radical="54">山</li>
+  <li class="radical" data-radical="55">川</li>
+  <li class="radical" data-radical="56">巛</li>
+  <li class="radical" data-radical="57">工</li>
+  <li class="radical" data-radical="58">已</li>
+  <li class="radical" data-radical="59">巾</li>
+  <li class="radical" data-radical="60">干</li>
+  <li class="radical" data-radical="61">幺</li>
+  <li class="radical" data-radical="62">广</li>
+  <li class="radical" data-radical="63">廴</li>
+  <li class="radical" data-radical="64">廾</li>
+  <li class="radical" data-radical="65">弋</li>
+  <li class="radical" data-radical="66">弓</li>
+  <li class="radical" data-radical="67">ヨ</li>
+  <li class="radical" data-radical="68">彑</li>
+  <li class="radical" data-radical="69">彡</li>
+  <li class="radical" data-radical="70">彳</li>
+  <li class="radical radical-image radical-71" data-radical="71" data-radk="忙">⺖</li>
+  <li class="radical radical-image radical-72" data-radical="72" data-radk="扎">⺘</li>
+  <li class="radical radical-image radical-73" data-radical="73" data-radk="汁">⺡</li>
+  <li class="radical radical-image radical-74" data-radical="74" data-radk="犯">⺨</li>
+  <li class="radical radical-image radical-75" data-radical="75" data-radk="艾">⺾</li>
+  <li class="radical radical-image radical-76" data-radical="76" data-radk="邦">⻏</li>
+  <li class="radical radical-image radical-77" data-radical="77" data-radk="阡">⻖</li>
+  <li class="radical" data-radical="78">也</li>
+  <li class="radical" data-radical="79">亡</li>
+  <li class="radical" data-radical="80">及</li>
+  <li class="radical" data-radical="81">久</li>
+  <li class="number">4</li>
+  <li class="radical radical-image radical-82" data-radical="82" data-radk="老">⺹</li>
+  <li class="radical" data-radical="83">心</li>
+  <li class="radical" data-radical="84">戈</li>
+  <li class="radical" data-radical="85">戸</li>
+  <li class="radical" data-radical="86">手</li>
+  <li class="radical" data-radical="87">支</li>
+  <li class="radical" data-radical="88">攵</li>
+  <li class="radical" data-radical="89">文</li>
+  <li class="radical" data-radical="90">斗</li>
+  <li class="radical" data-radical="91">斤</li>
+  <li class="radical" data-radical="92">方</li>
+  <li class="radical" data-radical="93">无</li>
+  <li class="radical" data-radical="94">日</li>
+  <li class="radical" data-radical="95">曰</li>
+  <li class="radical" data-radical="96">月</li>
+  <li class="radical" data-radical="97">木</li>
+  <li class="radical" data-radical="98">欠</li>
+  <li class="radical" data-radical="99">止</li>
+  <li class="radical" data-radical="100">歹</li>
+  <li class="radical" data-radical="101">殳</li>
+  <li class="radical" data-radical="102">比</li>
+  <li class="radical" data-radical="103">毛</li>
+  <li class="radical" data-radical="104">氏</li>
+  <li class="radical" data-radical="105">气</li>
+  <li class="radical" data-radical="106">水</li>
+  <li class="radical" data-radical="107">火</li>
+  <li class="radical radical-image radical-108" data-radical="108" data-radk="杰">⺣</li>
+  <li class="radical" data-radical="109">爪</li>
+  <li class="radical" data-radical="110">父</li>
+  <li class="radical" data-radical="111">爻</li>
+  <li class="radical" data-radical="112">爿</li>
+  <li class="radical" data-radical="113">片</li>
+  <li class="radical" data-radical="114">牛</li>
+  <li class="radical" data-radical="115">犬</li>
+  <li class="radical radical-image radical-116" data-radical="116" data-radk="礼">⺭</li>
+  <li class="radical" data-radical="117">王</li>
+  <li class="radical" data-radical="118">元</li>
+  <li class="radical" data-radical="119">井</li>
+  <li class="radical" data-radical="120">勿</li>
+  <li class="radical" data-radical="121">尤</li>
+  <li class="radical" data-radical="122">五</li>
+  <li class="radical" data-radical="123">屯</li>
+  <li class="radical" data-radical="124">巴</li>
+  <li class="radical" data-radical="125">毋</li>
+  <li class="number">5</li>
+  <li class="radical" data-radical="126">玄</li>
+  <li class="radical" data-radical="127">瓦</li>
+  <li class="radical" data-radical="128">甘</li>
+  <li class="radical" data-radical="129">生</li>
+  <li class="radical" data-radical="130">用</li>
+  <li class="radical" data-radical="131">田</li>
+  <li class="radical" data-radical="132">疋</li>
+  <li class="radical radical-image radical-133" data-radical="133" data-radk="疔">疒</li>
+  <li class="radical" data-radical="134">癶</li>
+  <li class="radical" data-radical="135">白</li>
+  <li class="radical" data-radical="136">皮</li>
+  <li class="radical" data-radical="137">皿</li>
+  <li class="radical" data-radical="138">目</li>
+  <li class="radical" data-radical="139">矛</li>
+  <li class="radical" data-radical="140">矢</li>
+  <li class="radical" data-radical="141">石</li>
+  <li class="radical" data-radical="142">示</li>
+  <li class="radical radical-image radical-143" data-radical="143" data-radk="禹">禸</li>
+  <li class="radical" data-radical="144">禾</li>
+  <li class="radical" data-radical="145">穴</li>
+  <li class="radical" data-radical="146">立</li>
+  <li class="radical radical-image radical-147" data-radical="147" data-radk="初">⻂</li>
+  <li class="radical" data-radical="148">世</li>
+  <li class="radical" data-radical="149">巨</li>
+  <li class="radical" data-radical="150">冊</li>
+  <li class="radical" data-radical="151">母</li>
+  <li class="radical radical-image radical-152" data-radical="152" data-radk="買">⺲</li>
+  <li class="radical" data-radical="153">牙</li>
+  <li class="number">6</li>
+  <li class="radical" data-radical="154">瓜</li>
+  <li class="radical" data-radical="155">竹</li>
+  <li class="radical" data-radical="156">米</li>
+  <li class="radical" data-radical="157">糸</li>
+  <li class="radical" data-radical="158">缶</li>
+  <li class="radical" data-radical="159">羊</li>
+  <li class="radical" data-radical="160">羽</li>
+  <li class="radical" data-radical="161">而</li>
+  <li class="radical" data-radical="162">耒</li>
+  <li class="radical" data-radical="163">耳</li>
+  <li class="radical" data-radical="164">聿</li>
+  <li class="radical" data-radical="165">肉</li>
+  <li class="radical" data-radical="166">自</li>
+  <li class="radical" data-radical="167">至</li>
+  <li class="radical" data-radical="168">臼</li>
+  <li class="radical" data-radical="169">舌</li>
+  <li class="radical" data-radical="170">舟</li>
+  <li class="radical" data-radical="171">艮</li>
+  <li class="radical" data-radical="172">色</li>
+  <li class="radical" data-radical="173">虍</li>
+  <li class="radical" data-radical="174">虫</li>
+  <li class="radical" data-radical="175">血</li>
+  <li class="radical" data-radical="176">行</li>
+  <li class="radical" data-radical="177">衣</li>
+  <li class="radical" data-radical="178">西</li>
+  <li class="number">7</li>
+  <li class="radical" data-radical="179">臣</li>
+  <li class="radical" data-radical="180">見</li>
+  <li class="radical" data-radical="181">角</li>
+  <li class="radical" data-radical="182">言</li>
+  <li class="radical" data-radical="183">谷</li>
+  <li class="radical" data-radical="184">豆</li>
+  <li class="radical" data-radical="185">豕</li>
+  <li class="radical" data-radical="186">豸</li>
+  <li class="radical" data-radical="187">貝</li>
+  <li class="radical" data-radical="188">赤</li>
+  <li class="radical" data-radical="189">走</li>
+  <li class="radical" data-radical="190">足</li>
+  <li class="radical" data-radical="191">身</li>
+  <li class="radical" data-radical="192">車</li>
+  <li class="radical" data-radical="193">辛</li>
+  <li class="radical" data-radical="194">辰</li>
+  <li class="radical" data-radical="195">酉</li>
+  <li class="radical" data-radical="196">釆</li>
+  <li class="radical" data-radical="197">里</li>
+  <li class="radical" data-radical="198">舛</li>
+  <li class="radical" data-radical="199">麦</li>
+  <li class="number">8</li>
+  <li class="radical" data-radical="200">金</li>
+  <li class="radical" data-radical="201">長</li>
+  <li class="radical" data-radical="202">門</li>
+  <li class="radical" data-radical="203">隶</li>
+  <li class="radical" data-radical="204">隹</li>
+  <li class="radical" data-radical="205">雨</li>
+  <li class="radical" data-radical="206">青</li>
+  <li class="radical" data-radical="207">非</li>
+  <li class="radical" data-radical="208">奄</li>
+  <li class="radical" data-radical="209">岡</li>
+  <li class="radical" data-radical="210">免</li>
+  <li class="radical" data-radical="211">斉</li>
+  <li class="number">9</li>
+  <li class="radical" data-radical="212">面</li>
+  <li class="radical" data-radical="213">革</li>
+  <li class="radical" data-radical="214">韭</li>
+  <li class="radical" data-radical="215">音</li>
+  <li class="radical" data-radical="216">頁</li>
+  <li class="radical" data-radical="217">風</li>
+  <li class="radical" data-radical="218">飛</li>
+  <li class="radical" data-radical="219">食</li>
+  <li class="radical" data-radical="220">首</li>
+  <li class="radical" data-radical="221">香</li>
+  <li class="radical" data-radical="222">品</li>
+  <li class="number">10</li>
+  <li class="radical" data-radical="223">馬</li>
+  <li class="radical" data-radical="224">骨</li>
+  <li class="radical" data-radical="225">高</li>
+  <li class="radical" data-radical="226">髟</li>
+  <li class="radical" data-radical="227">鬥</li>
+  <li class="radical" data-radical="228">鬯</li>
+  <li class="radical" data-radical="229">鬲</li>
+  <li class="radical" data-radical="230">鬼</li>
+  <li class="radical" data-radical="231">竜</li>
+  <li class="radical" data-radical="232">韋</li>
+  <li class="number">11</li>
+  <li class="radical" data-radical="233">魚</li>
+  <li class="radical" data-radical="234">鳥</li>
+  <li class="radical" data-radical="235">鹵</li>
+  <li class="radical" data-radical="236">鹿</li>
+  <li class="radical" data-radical="237">麻</li>
+  <li class="radical" data-radical="238">亀</li>
+  <li class="radical radical-image radical-239" data-radical="239" data-radk="滴">啇</li>
+  <li class="radical" data-radical="240">黄</li>
+  <li class="radical" data-radical="241">黒</li>
+  <li class="number">12</li>
+  <li class="radical" data-radical="242">黍</li>
+  <li class="radical" data-radical="243">黹</li>
+  <li class="radical" data-radical="244">無</li>
+  <li class="radical" data-radical="245">歯</li>
+  <li class="number">13</li>
+  <li class="radical" data-radical="246">黽</li>
+  <li class="radical" data-radical="247">鼎</li>
+  <li class="radical" data-radical="248">鼓</li>
+  <li class="radical" data-radical="249">鼠</li>
+  <li class="number">14</li>
+  <li class="radical" data-radical="250">鼻</li>
+  <li class="radical" data-radical="251">齊</li>
+  <li class="number">17</li>
+  <li class="radical" data-radical="252">龠</li>
+</ul>
+
+</div>
+
+        <div id="handwriting_area" class="area handwriting" data-url="/handwriting">
+  <div class="results_wrapper">
+  <div class="results">
+    <div class="list">
+      <div class="instructions">
+        <div class="vertical-bottom">
+          <div class="vertical-bottom-inner">
+            
+    <div class="arrow">▾</div>
+    <div class="text">Input kanji by handwriting. Just start drawing!</div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="show_more">More</div>
+    <div class="show_less link">Less</div>
+  </div>
+  <div class="scroll_indicator show-for-small-only"></div>
+</div>
+  <div class="inputs">
+    <div class="panel disablePanZoomInIE">
+  <canvas width="310" height="275"></canvas>
+  <svg viewBox="0 0 30 30" class="icon pencil-icon ">
+  <use xlink:href="https://jisho.org/assets/icons-ab7975eb6f8bb532f99ba2d769be43c5431dec4c0e4d220df7367f1d954d9424.svg#pencil"></use>
+</svg>
+
+  <div class="buttons">
+    <button type="button" class="tiny reset button">Clear</button>
+    <button type="button" class="tiny back button">Back</button>
+  </div>
+</div>
+
+    <div class="panel disablePanZoomInIE">
+  <canvas width="310" height="275"></canvas>
+  <svg viewBox="0 0 30 30" class="icon pencil-icon ">
+  <use xlink:href="https://jisho.org/assets/icons-ab7975eb6f8bb532f99ba2d769be43c5431dec4c0e4d220df7367f1d954d9424.svg#pencil"></use>
+</svg>
+
+  <div class="buttons">
+    <button type="button" class="tiny reset button">Clear</button>
+    <button type="button" class="tiny back button">Back</button>
+  </div>
+</div>
+
+  </div>
+</div>
+
+        <div id="speech_area" class="area speech">
+
+  <div class="speech_results"></div>
+
+  <div class="explanation">
+    <div class="arrow">▴</div>
+    <div class="text">
+      Speak! You can use words like "back", "clear", "stop", "input", or "search".  At any time say "Japanese" to switch to Japanese (requires permissions again).
+    </div>
+  </div>
+
+  <div class="buttons">
+    <button class="tiny english">English</button>
+    <button class="tiny japanese">Japanese</button>
+  </div>
+</div>
+
+        <div id="advanced_area" class="hidden area advanced">
+  <div class="filters">
+  <ul class="button-group radius" data-filter-group="type">
+    <li><a accesskey="a" class=" filter small button" data-filter="type-all" href="//jisho.org/search/%E7%8C%AB%20%23sentence">All</a></li>
+    <li><a accesskey="w" class=" filter small button" data-filter="words" href="//jisho.org/search/%E7%8C%AB%20%23sentence">Words</a></li>
+    <li><a accesskey="k" class=" filter small button" data-filter="kanji" href="//jisho.org/search/%E7%8C%AB%20%23sentence">Kanji</a></li>
+    <li><a accesskey="s" class=" filter small button active" data-filter="sentences" href="//jisho.org/search/%E7%8C%AB%20%23sentence">Sentences</a></li>
+    <li><a accesskey="n" class=" filter small button" data-filter="names" href="//jisho.org/search/%E7%8C%AB%20%23sentence">Names</a></li>
+  </ul>
+  <p>
+    Read the <a href="//jisho.org/docs">advanced search options documentation</a> for a full list of available search options.
+  </p>
+</div>
+
+</div>
+
+      </div>
+    </div>
+  </div>
+
+</form>
+      </div>
+    </div>
+    <div id="inflection_modal" class="reveal-modal small" data-reveal>
+      <div class="modal_content"></div>
+      <a class="close-reveal-modal">&#215;</a>
+    </div>
+    <div id="page_container" class="row">
+      <div class="large-12 columns">
+        
+        
+
+<div id="main_results">
+  <div id="result_area">
+
+
+
+
+  </div>
+
+  <div class="row">
+
+    <div id="secondary" class="large-12 columns search-secondary_column">
+
+
+        <div class="sentences_block">
+          <h4>Sentences<span class="result_count"> — 405 found</span></h4>
+          <ul class="sentences">
+            <li class="entry sentence clearfix">
+  <div class="debug">jreibun/7324/1</div>
+
+  <div class="sentence_content">
+    <ul class="japanese_sentence japanese japanese_gothic clearfix" lang="ja">
+      猫が<li class="clearfix"><span class="furigana">からだじゅう</span><span class="unlinked">体中</span></li>を<li class="clearfix"><span class="furigana">ていねい</span><span class="unlinked">丁寧</span></li>に<li class="clearfix"><span class="furigana">な</span><span class="unlinked">舐めて</span></li><li class="clearfix"><span class="furigana">け</span><span class="unlinked">毛づくろい</span></li>をしている。
+    </ul>
+    <div class="english_sentence clearfix">
+      <span class="english">The cat is carefully licking its fur and grooming itself.</span>
+          <span class="inline_copyright jreibun">— <strong><a href="http://www.tufs.ac.jp/ts/personal/SUZUKI_Tomomi/jreibun/index-jreibun.html">Jreibun</a></strong></span>
+    </div>
+  </div>
+
+    <a class="light-details_link" href="//jisho.org/sentences/63fd1d3712a537194e000180">Details ▸</a>
+</li>
+<li class="entry sentence clearfix">
+  <div class="debug">jreibun/8/1</div>
+
+  <div class="sentence_content">
+    <ul class="japanese_sentence japanese japanese_gothic clearfix" lang="ja">
+      父は生涯、<li class="clearfix"><span class="furigana">かいねこ</span><span class="unlinked">飼い猫</span></li>を家族の<li class="clearfix"><span class="furigana">いちいん</span><span class="unlinked">一員</span></li><li class="clearfix"><span class="furigana">どうよう</span><span class="unlinked">同様</span></li>、<li class="clearfix"><span class="furigana">せいいっぱい</span><span class="unlinked">精一杯</span></li>の愛情を<li class="clearfix"><span class="furigana">そそ</span><span class="unlinked">注いで</span></li>大切に育てた。
+    </ul>
+    <div class="english_sentence clearfix">
+      <span class="english">Throughout his life, my father cared for his cats with all the love and attention he could muster, as if the cats were a member of the family.</span>
+          <span class="inline_copyright jreibun">— <strong><a href="http://www.tufs.ac.jp/ts/personal/SUZUKI_Tomomi/jreibun/index-jreibun.html">Jreibun</a></strong></span>
+    </div>
+  </div>
+
+    <a class="light-details_link" href="//jisho.org/sentences/65dbf59212a53778d600000b">Details ▸</a>
+</li>
+<li class="entry sentence clearfix">
+  <div class="debug">jreibun/75/1</div>
+
+  <div class="sentence_content">
+    <ul class="japanese_sentence japanese japanese_gothic clearfix" lang="ja">
+      <li class="clearfix"><span class="furigana">あさ</span><span class="unlinked">朝</span></li><li class="clearfix"><span class="furigana">ねどこ</span><span class="unlinked">寝床</span></li>から起きてきた<li class="clearfix"><span class="furigana">ねこ</span><span class="unlinked">猫</span></li>は、 <li class="clearfix"><span class="furigana">の</span><span class="unlinked">伸び</span></li>をしながら大きなあくびをして、<li class="clearfix"><span class="furigana">け</span><span class="unlinked">毛づくろい</span></li>を始めた。
+    </ul>
+    <div class="english_sentence clearfix">
+      <span class="english">The cat woke up from its bed in the morning, stretched while giving a big yawn, and began to groom herself.</span>
+          <span class="inline_copyright jreibun">— <strong><a href="http://www.tufs.ac.jp/ts/personal/SUZUKI_Tomomi/jreibun/index-jreibun.html">Jreibun</a></strong></span>
+    </div>
+  </div>
+
+    <a class="light-details_link" href="//jisho.org/sentences/65dbf67f12a53778d6000066">Details ▸</a>
+</li>
+<li class="entry sentence clearfix">
+  <div class="debug">jreibun/482/1</div>
+
+  <div class="sentence_content">
+    <ul class="japanese_sentence japanese japanese_gothic clearfix" lang="ja">
+      ここのところ毎日忙しくて、<li class="clearfix"><span class="furigana">かいねこ</span><span class="unlinked">飼い猫</span></li>の<li class="clearfix"><span class="furigana">あたま</span><span class="unlinked">頭</span></li>をゆっくり<li class="clearfix"><span class="furigana">な</span><span class="unlinked">撫でて</span></li>いる<li class="clearfix"><span class="furigana">ひま</span><span class="unlinked">暇</span></li>さえなかった。
+    </ul>
+    <div class="english_sentence clearfix">
+      <span class="english">I’ve been so busy these days that I haven’t even had the time to slowly stroke my cat’s head.</span>
+          <span class="inline_copyright jreibun">— <strong><a href="http://www.tufs.ac.jp/ts/personal/SUZUKI_Tomomi/jreibun/index-jreibun.html">Jreibun</a></strong></span>
+    </div>
+  </div>
+
+    <a class="light-details_link" href="//jisho.org/sentences/65dbf69b12a53778d6000089">Details ▸</a>
+</li>
+<li class="entry sentence clearfix">
+  <div class="debug">jreibun/655/3</div>
+
+  <div class="sentence_content">
+    <ul class="japanese_sentence japanese japanese_gothic clearfix" lang="ja">
+      <li class="clearfix"><span class="furigana">ねこ</span><span class="unlinked">猫</span></li>は、おなかを<li class="clearfix"><span class="furigana">さわ</span><span class="unlinked">触られる</span></li>のを<li class="clearfix"><span class="furigana">いや</span><span class="unlinked">嫌がる</span></li>という。
+    </ul>
+    <div class="english_sentence clearfix">
+      <span class="english">I heard that cats do not like to have their bellies touched.</span>
+          <span class="inline_copyright jreibun">— <strong><a href="http://www.tufs.ac.jp/ts/personal/SUZUKI_Tomomi/jreibun/index-jreibun.html">Jreibun</a></strong></span>
+    </div>
+  </div>
+
+    <a class="light-details_link" href="//jisho.org/sentences/668cb84412a5373295000029">Details ▸</a>
+</li>
+<li class="entry sentence clearfix">
+  <div class="debug">jreibun/2542/1</div>
+
+  <div class="sentence_content">
+    <ul class="japanese_sentence japanese japanese_gothic clearfix" lang="ja">
+      <li class="clearfix"><span class="furigana">じっか</span><span class="unlinked">実家</span></li>で<li class="clearfix"><span class="furigana">こねこ</span><span class="unlinked">子猫</span></li>を飼い始めた。<li class="clearfix"><span class="furigana">きょう</span><span class="unlinked">今日</span></li>は<li class="clearfix"><span class="furigana">へや</span><span class="unlinked">部屋</span></li>のどこにいたとか、フードをどれくらい食べたとか、家族は<li class="clearfix"><span class="furigana">こねこ</span><span class="unlinked">子猫</span></li>のことを話し出すときりがないようだ。
+    </ul>
+    <div class="english_sentence clearfix">
+      <span class="english">My family got a new kitten as a pet. They talk endlessly about this kitten, such as which part of the room she was in today or how much food she ate.</span>
+          <span class="inline_copyright jreibun">— <strong><a href="http://www.tufs.ac.jp/ts/personal/SUZUKI_Tomomi/jreibun/index-jreibun.html">Jreibun</a></strong></span>
+    </div>
+  </div>
+
+    <a class="light-details_link" href="//jisho.org/sentences/65dbf9af12a53778d6000314">Details ▸</a>
+</li>
+<li class="entry sentence clearfix">
+  <div class="debug">jreibun/3801/1</div>
+
+  <div class="sentence_content">
+    <ul class="japanese_sentence japanese japanese_gothic clearfix" lang="ja">
+      うちの猫は<li class="clearfix"><span class="furigana">さびしがりや</span><span class="unlinked">寂しがり屋</span></li>で、私が外出するのがわかると、玄関まで追ってきて寂しそうに鳴く。
+    </ul>
+    <div class="english_sentence clearfix">
+      <span class="english">My cat does not like to be alone, and when she knows I am going out, she follows me to the front door and mews forlornly.</span>
+          <span class="inline_copyright jreibun">— <strong><a href="http://www.tufs.ac.jp/ts/personal/SUZUKI_Tomomi/jreibun/index-jreibun.html">Jreibun</a></strong></span>
+    </div>
+  </div>
+
+    <a class="light-details_link" href="//jisho.org/sentences/65dbfade12a53778d600042c">Details ▸</a>
+</li>
+<li class="entry sentence clearfix">
+  <div class="debug">jreibun/4133/1</div>
+
+  <div class="sentence_content">
+    <ul class="japanese_sentence japanese japanese_gothic clearfix" lang="ja">
+      家の中で犬や猫などのペットを飼う場合は、まずトイレのしつけが欠かせない。
+    </ul>
+    <div class="english_sentence clearfix">
+      <span class="english">When you have a pet such as a dog or a cat in your home, it is essential to first house-train them so that they can properly control bladder and bowel movements.</span>
+          <span class="inline_copyright jreibun">— <strong><a href="http://www.tufs.ac.jp/ts/personal/SUZUKI_Tomomi/jreibun/index-jreibun.html">Jreibun</a></strong></span>
+    </div>
+  </div>
+
+    <a class="light-details_link" href="//jisho.org/sentences/65dbfafa12a53778d6000452">Details ▸</a>
+</li>
+<li class="entry sentence clearfix">
+  <div class="debug">jreibun/4162/1</div>
+
+  <div class="sentence_content">
+    <ul class="japanese_sentence japanese japanese_gothic clearfix" lang="ja">
+      <li class="clearfix"><span class="furigana">なに</span><span class="unlinked">何か</span></li>が気になるのか、猫は<li class="clearfix"><span class="furigana">まどべ</span><span class="unlinked">窓辺</span></li>に<li class="clearfix"><span class="furigana">すわ</span><span class="unlinked">座って</span></li>外の<li class="clearfix"><span class="furigana">ようす</span><span class="unlinked">様子</span></li>をじっと見ている。
+    </ul>
+    <div class="english_sentence clearfix">
+      <span class="english">The cat is sitting on the windowsill, staring at something outside, as if something is bothering her.</span>
+          <span class="inline_copyright jreibun">— <strong><a href="http://www.tufs.ac.jp/ts/personal/SUZUKI_Tomomi/jreibun/index-jreibun.html">Jreibun</a></strong></span>
+    </div>
+  </div>
+
+    <a class="light-details_link" href="//jisho.org/sentences/65dbfb0f12a53778d600045b">Details ▸</a>
+</li>
+<li class="entry sentence clearfix">
+  <div class="debug">jreibun/4538/1</div>
+
+  <div class="sentence_content">
+    <ul class="japanese_sentence japanese japanese_gothic clearfix" lang="ja">
+      近所の<li class="clearfix"><span class="furigana">のらねこ</span><span class="unlinked">野良猫</span></li>にえさをやっているうちに、<li class="clearfix"><span class="furigana">じょう</span><span class="unlinked">情</span></li>が移ってペットとして飼うことにした。
+    </ul>
+    <div class="english_sentence clearfix">
+      <span class="english">While feeding a stray cat in the neighborhood, I became emotionally attached to it and decided to bring the cat home as my pet.</span>
+          <span class="inline_copyright jreibun">— <strong><a href="http://www.tufs.ac.jp/ts/personal/SUZUKI_Tomomi/jreibun/index-jreibun.html">Jreibun</a></strong></span>
+    </div>
+  </div>
+
+    <a class="light-details_link" href="//jisho.org/sentences/65dbfc3b12a53778d60005ac">Details ▸</a>
+</li>
+<li class="entry sentence clearfix">
+  <div class="debug">jreibun/5363/2</div>
+
+  <div class="sentence_content">
+    <ul class="japanese_sentence japanese japanese_gothic clearfix" lang="ja">
+      私が住む町でもペットへのマイクロチップ<li class="clearfix"><span class="furigana">そうちゃく</span><span class="unlinked">装着</span></li>が<li class="clearfix"><span class="furigana">ぎむか</span><span class="unlinked">義務化</span></li>された。法令によると、犬または猫を取得した日から<li class="clearfix"><span class="furigana">さんじゅうにちいない</span><span class="unlinked">30日以内</span></li>に<li class="clearfix"><span class="furigana">そうちゃく</span><span class="unlinked">装着しなければ</span></li>ならず、「<li class="clearfix"><span class="furigana">ぜんこう</span><span class="unlinked">前項</span></li>に規定された<li class="clearfix"><span class="furigana">きかんない</span><span class="unlinked">期間内</span></li>に<li class="clearfix"><span class="furigana">そうちゃく</span><span class="unlinked">装着しなかった</span></li>場合」にどうなるかというと、「<li class="clearfix"><span class="furigana">ばっきん</span><span class="unlinked">罰金</span></li>」が<li class="clearfix"><span class="furigana">か</span><span class="unlinked">課される</span></li>ということだ。ペットを取り上げられるのかと思ってどきどきしながら規則を読んでいたので、少しほっとした。
+    </ul>
+    <div class="english_sentence clearfix">
+      <span class="english">Microchipping of pets is now mandatory in the town where I live. According to the law, a microchip must be implanted into a dog or cat within 30 days from the date of acquisition of a pet, and if it is not implanted within the period specified in the preceding paragraph, a fine will be levied. I was a little relieved as I was nervously reading the regulation thinking that they would take my pet away from me.</span>
+          <span class="inline_copyright jreibun">— <strong><a href="http://www.tufs.ac.jp/ts/personal/SUZUKI_Tomomi/jreibun/index-jreibun.html">Jreibun</a></strong></span>
+    </div>
+  </div>
+
+    <a class="light-details_link" href="//jisho.org/sentences/65dbfd5912a53778d60006bd">Details ▸</a>
+</li>
+<li class="entry sentence clearfix">
+  <div class="debug">jreibun/8192/1</div>
+
+  <div class="sentence_content">
+    <ul class="japanese_sentence japanese japanese_gothic clearfix" lang="ja">
+      <li class="clearfix"><span class="furigana">ねつ</span><span class="unlinked">熱っぽかった</span></li>ので、<li class="clearfix"><span class="furigana">ひたい</span><span class="unlinked">額</span></li>に<li class="clearfix"><span class="furigana">て</span><span class="unlinked">手</span></li>を<li class="clearfix"><span class="furigana">あ</span><span class="unlinked">当てて</span></li><li class="clearfix"><span class="furigana">ねつ</span><span class="unlinked">熱</span></li>がないか<li class="clearfix"><span class="furigana">たし</span><span class="unlinked">確かめて</span></li>みた。
+    </ul>
+    <div class="english_sentence clearfix">
+      <span class="english">I felt feverish, so I put my hand on my forehead to check my temperature.</span>
+          <span class="inline_copyright jreibun">— <strong><a href="http://www.tufs.ac.jp/ts/personal/SUZUKI_Tomomi/jreibun/index-jreibun.html">Jreibun</a></strong></span>
+    </div>
+  </div>
+
+    <a class="light-details_link" href="//jisho.org/sentences/65dbff3e12a53778d6000883">Details ▸</a>
+</li>
+<li class="entry sentence clearfix">
+  <div class="debug">jreibun/8199/2</div>
+
+  <div class="sentence_content">
+    <ul class="japanese_sentence japanese japanese_gothic clearfix" lang="ja">
+      寒いのか、<li class="clearfix"><span class="furigana">こねこ</span><span class="unlinked">子猫たち</span></li>がぴたりと<li class="clearfix"><span class="furigana">み</span><span class="unlinked">身</span></li>を<li class="clearfix"><span class="furigana">よせあ</span><span class="unlinked">寄せ合って</span></li>寝ている。
+    </ul>
+    <div class="english_sentence clearfix">
+      <span class="english">Perhaps because it is cold, the kittens are sleeping huddled together.</span>
+          <span class="inline_copyright jreibun">— <strong><a href="http://www.tufs.ac.jp/ts/personal/SUZUKI_Tomomi/jreibun/index-jreibun.html">Jreibun</a></strong></span>
+    </div>
+  </div>
+
+    <a class="light-details_link" href="//jisho.org/sentences/65dbff4112a53778d600088b">Details ▸</a>
+</li>
+<li class="entry sentence clearfix">
+  <div class="debug">jreibun/8207/1</div>
+
+  <div class="sentence_content">
+    <ul class="japanese_sentence japanese japanese_gothic clearfix" lang="ja">
+      <li class="clearfix"><span class="furigana">かいねこ</span><span class="unlinked">飼い猫</span></li>が<li class="clearfix"><span class="furigana">かべ</span><span class="unlinked">壁</span></li>を<li class="clearfix"><span class="furigana">ひ</span><span class="unlinked">引っかいて</span></li><li class="clearfix"><span class="furigana">つめと</span><span class="unlinked">爪研ぎ</span></li>をするので、<li class="clearfix"><span class="furigana">わがや</span><span class="unlinked">我が家</span></li>の<li class="clearfix"><span class="furigana">かべ</span><span class="unlinked">壁</span></li>は<li class="clearfix"><span class="furigana">ひっかききず</span><span class="unlinked">引っかき傷</span></li>だらけだ。
+    </ul>
+    <div class="english_sentence clearfix">
+      <span class="english">My cat scratches and sharpens claws against the walls, so my walls are covered with scratches.</span>
+          <span class="inline_copyright jreibun">— <strong><a href="http://www.tufs.ac.jp/ts/personal/SUZUKI_Tomomi/jreibun/index-jreibun.html">Jreibun</a></strong></span>
+    </div>
+  </div>
+
+    <a class="light-details_link" href="//jisho.org/sentences/65dbff5412a53778d6000899">Details ▸</a>
+</li>
+<li class="entry sentence clearfix">
+  <div class="debug">jreibun/8259/1</div>
+
+  <div class="sentence_content">
+    <ul class="japanese_sentence japanese japanese_gothic clearfix" lang="ja">
+      近所の公園にいる<li class="clearfix"><span class="furigana">ねこ</span><span class="unlinked">猫</span></li>は、<li class="clearfix"><span class="furigana">ねこ</span><span class="unlinked">猫</span></li>にしては<li class="clearfix"><span class="furigana">めずら</span><span class="unlinked">珍しく</span></li><li class="clearfix"><span class="furigana">ひとなつ</span><span class="unlinked">人懐っこくて</span></li><li class="clearfix"><span class="furigana">にんげん</span><span class="unlinked">人間</span></li>を見るとすり寄ってくる。
+    </ul>
+    <div class="english_sentence clearfix">
+      <span class="english">A cat in a nearby park is unusually friendly for a cat; when it sees humans, it snuggles up to them.</span>
+          <span class="inline_copyright jreibun">— <strong><a href="http://www.tufs.ac.jp/ts/personal/SUZUKI_Tomomi/jreibun/index-jreibun.html">Jreibun</a></strong></span>
+    </div>
+  </div>
+
+    <a class="light-details_link" href="//jisho.org/sentences/65dbffbe12a53778d6000908">Details ▸</a>
+</li>
+<li class="entry sentence clearfix">
+  <div class="debug">jreibun/8276/1</div>
+
+  <div class="sentence_content">
+    <ul class="japanese_sentence japanese japanese_gothic clearfix" lang="ja">
+      ひまわりは日光を<li class="clearfix"><span class="furigana">この</span><span class="unlinked">好む</span></li>ので、<li class="clearfix"><span class="furigana">はち</span><span class="unlinked">鉢</span></li>を<li class="clearfix"><span class="furigana">ひなた</span><span class="unlinked">日向</span></li>に置いて育てるのが良い。
+    </ul>
+    <div class="english_sentence clearfix">
+      <span class="english">Sunflowers prefer sunlight; therefore, it is best to grow them in pots so that you can move them to a location where they can receive sunlight.</span>
+          <span class="inline_copyright jreibun">— <strong><a href="http://www.tufs.ac.jp/ts/personal/SUZUKI_Tomomi/jreibun/index-jreibun.html">Jreibun</a></strong></span>
+    </div>
+  </div>
+
+    <a class="light-details_link" href="//jisho.org/sentences/65dbffce12a53778d6000921">Details ▸</a>
+</li>
+<li class="entry sentence clearfix">
+  <div class="debug">jreibun/8301/3</div>
+
+  <div class="sentence_content">
+    <ul class="japanese_sentence japanese japanese_gothic clearfix" lang="ja">
+      <li class="clearfix"><span class="furigana">みつご</span><span class="unlinked">三つ子</span></li>の<li class="clearfix"><span class="furigana">こねこ</span><span class="unlinked">子猫</span></li>はどれもそっくりだが、<li class="clearfix"><span class="furigana">け</span><span class="unlinked">毛</span></li>の<li class="clearfix"><span class="furigana">もよう</span><span class="unlinked">模様</span></li>が微妙に違っているので、よく見れば<li class="clearfix"><span class="furigana">みわ</span><span class="unlinked">見分けられない</span></li>ことはない。
+    </ul>
+    <div class="english_sentence clearfix">
+      <span class="english">The triplet kittens all look alike, but the color patterns of their fur are slightly different, so it is not impossible to tell them apart if you look closely.</span>
+          <span class="inline_copyright jreibun">— <strong><a href="http://www.tufs.ac.jp/ts/personal/SUZUKI_Tomomi/jreibun/index-jreibun.html">Jreibun</a></strong></span>
+    </div>
+  </div>
+
+    <a class="light-details_link" href="//jisho.org/sentences/65dc000212a53778d600095a">Details ▸</a>
+</li>
+<li class="entry sentence clearfix">
+  <div class="debug">jreibun/8325/5</div>
+
+  <div class="sentence_content">
+    <ul class="japanese_sentence japanese japanese_gothic clearfix" lang="ja">
+      <li class="clearfix"><span class="furigana">かいぬし</span><span class="unlinked">飼い主</span></li>の<li class="clearfix"><span class="furigana">め</span><span class="unlinked">目</span></li>を見てまばたきするのは、<li class="clearfix"><span class="furigana">ねこ</span><span class="unlinked">猫</span></li>の愛情表現の<li class="clearfix"><span class="furigana">ひと</span><span class="unlinked">一つ</span></li>であると言われている。
+    </ul>
+    <div class="english_sentence clearfix">
+      <span class="english">Blinking while staring into its owner’s eyes is said to be one of the ways cats express their affection.</span>
+          <span class="inline_copyright jreibun">— <strong><a href="http://www.tufs.ac.jp/ts/personal/SUZUKI_Tomomi/jreibun/index-jreibun.html">Jreibun</a></strong></span>
+    </div>
+  </div>
+
+    <a class="light-details_link" href="//jisho.org/sentences/668cbe0112a5373295000146">Details ▸</a>
+</li>
+<li class="entry sentence clearfix">
+  <div class="debug">jreibun/8352/5</div>
+
+  <div class="sentence_content">
+    <ul class="japanese_sentence japanese japanese_gothic clearfix" lang="ja">
+      <li class="clearfix"><span class="furigana">いっかげつまえ</span><span class="unlinked">1か月前</span></li>に<li class="clearfix"><span class="furigana">わがや</span><span class="unlinked">我が家</span></li>にやって来た<li class="clearfix"><span class="furigana">こねこ</span><span class="unlinked">子猫</span></li>は、<li class="clearfix"><span class="furigana">けいかいしん</span><span class="unlinked">警戒心</span></li>が強くなかなか心を<li class="clearfix"><span class="furigana">ひら</span><span class="unlinked">開いて</span></li>くれない。
+    </ul>
+    <div class="english_sentence clearfix">
+      <span class="english">The kitten that came to our house a month ago is very cautious and hasn’t opened up to us easily.</span>
+          <span class="inline_copyright jreibun">— <strong><a href="http://www.tufs.ac.jp/ts/personal/SUZUKI_Tomomi/jreibun/index-jreibun.html">Jreibun</a></strong></span>
+    </div>
+  </div>
+
+    <a class="light-details_link" href="//jisho.org/sentences/65dc007a12a53778d60009cf">Details ▸</a>
+</li>
+<li class="entry sentence clearfix">
+  <div class="debug">jreibun/9046/1</div>
+
+  <div class="sentence_content">
+    <ul class="japanese_sentence japanese japanese_gothic clearfix" lang="ja">
+      仕事が忙しく、イライラしていたが、帰りの通勤電車の<li class="clearfix"><span class="furigana">なか</span><span class="unlinked">中</span></li>で<li class="clearfix"><span class="furigana">おおがたけん</span><span class="unlinked">大型犬</span></li>の<li class="clearfix"><span class="furigana">うえ</span><span class="unlinked">上</span></li>で<li class="clearfix"><span class="furigana">ねこ</span><span class="unlinked">猫</span></li>が<li class="clearfix"><span class="furigana">いっしょ</span><span class="unlinked">一緒に</span></li>寝ている動画を見て、<li class="clearfix"><span class="furigana">こころ</span><span class="unlinked">心</span></li>がほっこりと<li class="clearfix"><span class="furigana">あたた</span><span class="unlinked">温まった</span></li>。
+    </ul>
+    <div class="english_sentence clearfix">
+      <span class="english">I was busy at work and frustrated, but on the train ride home I saw a video of a cat sleeping on top of a large dog, and it warmed my heart.</span>
+          <span class="inline_copyright jreibun">— <strong><a href="http://www.tufs.ac.jp/ts/personal/SUZUKI_Tomomi/jreibun/index-jreibun.html">Jreibun</a></strong></span>
+    </div>
+  </div>
+
+    <a class="light-details_link" href="//jisho.org/sentences/65dc011312a53778d6000a65">Details ▸</a>
+</li>
+
+          </ul>
+          
+
+
+  <a class="more" href="//jisho.org/search/%E7%8C%AB%20%23sentences?page=2">More <span class='accesskey'>S</span>entences &gt;</a>
+
+        </div>
+
+
+        
+
+</div>
+  </div>
+</div>
+
+      </div>
+    </div>
+
+      <footer class="clearfix">
+  <div class="ornament">
+  </div>
+
+  <div class="row">
+    <div class="small-12 columns">
+      <p>
+        Jisho.org is lovingly crafted by <a href="//jisho.org/about">Kim, Miwa and Andrew</a>.
+        You can reach us on Mastodon at <a href="https://mastodon.social/@jisho">@jisho@mastodon.social</a> or by e-mail to <a href="mailto:jisho.org@gmail.com">jisho.org@gmail.com</a>. Before you contact us, please read our list of <a href="//jisho.org/faq">frequently asked questions</a>. Please note that we read all messages we get, but it can take a long time for us to reply as Jisho is a side project and we do not have very much time to devote to it.
+      </p>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="small-12 large-4 columns">
+      <p>
+        This site uses the <a href="http://www.edrdg.org/wiki/index.php/JMdict-EDICT_Dictionary_Project">JMdict</a>, <a href="http://www.edrdg.org/wiki/index.php/KANJIDIC_Project">Kanjidic2</a>, <a href="http://www.edrdg.org/enamdict/enamdict_doc.html">JMnedict</a> and <a href="http://www.edrdg.org/krad/kradinf.html">Radkfile</a> dictionary files. These files are the property of the <a href="http://www.edrdg.org/"> Electronic Dictionary Research and Development Group</a>, and are used in conformance with the Group's <a href="http://www.edrdg.org/edrdg/licence.html">licence</a>.
+      </p>
+      <p>
+        Example sentences come from the <a href="http://tatoeba.org/">Tatoeba</a> project and are licensed under <a href="http://creativecommons.org/licenses/by/2.0/fr/">Creative Commons CC-BY</a>. And from the <a href="http://www.tufs.ac.jp/ts/personal/SUZUKI_Tomomi/jreibun/index-jreibun.html">Jreibun</a> project.
+      </p>
+      <p>
+        Audio files are graciously provided by <a href="http://www.tofugu.com">Tofugu’s</a> excellent kanji learning site <a href="http://www.wanikani.com">WaniKani</a>.
+      </p>
+    </div>
+    <div class="small-12 large-4 columns">
+      <p>
+        The SKIP (System of Kanji Indexing by Patterns) system for ordering kanji was developed by Jack Halpern (Kanji Dictionary Publishing Society at <a href="http://www.kanji.org/">http://www.kanji.org/</a>), and is used with his permission. The license is <a href="http://www.kanji.org/kanji/dictionaries/skip_permission.htm">Creative Commons Attribution-ShareAlike 4.0 International</a>.
+      </p>
+    </div>
+    <div class="small-12 large-4 columns">
+      <p>
+        Kanji stroke diagrams are based on data from <a href="http://kanjivg.tagaini.net" title="Welcome - KanjiVG">KanjiVG</a>, which is copyright &copy; 2009-2012 Ulrich Apel and released under the <a href="http://creativecommons.org/licenses/by-sa/3.0/">Creative Commons Attribution-Share Alike 3.0</a> license.
+      </p>
+      <p>
+        Wikipedia data comes from the <a href="http://wiki.dbpedia.org/about">DBpedia</a> project and is dual licensed under <a href="http://en.wikipedia.org/wiki/Wikipedia:Text_of_Creative_Commons_Attribution-ShareAlike_3.0_Unported_License">Creative Commons Attribution-ShareAlike 3.0</a> and <a href="http://en.wikipedia.org/wiki/Wikipedia:Text_of_the_GNU_Free_Documentation_License">GNU Free Documentation License</a>.
+      </p>
+      <p>
+        JLPT data comes from <a href="http://www.tanos.co.uk/contact/">Jonathan Waller‘s</a> <a href="http://www.tanos.co.uk/jlpt/">JLPT Resources</a> page.
+      </p>
+    </div>
+  </div>
+
+</footer>
+
+    <script type="text/javascript" charset="utf-8">
+    var currentUser = null;
+
+</script>
+
+<script src="https://assets.jisho.org/assets/application-fe07b0b8ade93cbea5bf2f513ab5d59be67f0c111905dbeabfb88aa48c81e88e.js"></script>
+
+  <style type="text/css" media="screen">
+    .debug { display: none; }
+  </style>
+
+
+
+    <script>
+
+  (function() {
+
+   Namespace('Jisho.KeyEvents', {});
+     var body = $(document.body);
+
+     function applyBodyClass(keyEvent, on) {
+       body.toggleClass(getClassForEvent(keyEvent), on !== (keyEvent.type == 'display'));
+     }
+
+     function getClassForEvent(keyEvent) {
+       return (keyEvent.type == 'display' ? 'hide' : 'highlight') + '_' + keyEvent.name;
+     }
+
+     body.keydown(function(e) {
+       var events = Jisho.KeyEvents[e.which];
+       if(events) {
+         events.each(function(keyEvent) {
+           if(keyEvent.active) return;
+           keyEvent.active = true;
+           if(keyEvent.phase == 'toggle') {
+             body.toggleClass(getClassForEvent(keyEvent));
+           } else {
+             applyBodyClass(keyEvent, true);
+           }
+         });
+       }
+     });
+
+     body.keyup(function(e) {
+       var events = Jisho.KeyEvents[e.which];
+       if(events) {
+         events.each(function(keyEvent) {
+           keyEvent.active = false;
+           if(keyEvent.phase !== 'toggle') {
+             applyBodyClass(keyEvent, false);
+           }
+         });
+       }
+     });
+
+
+  })();
+
+</script>
+
+    <div id="loginHelpDialog" class="reveal-modal" data-reveal aria-labelledby="Login" aria-hidden="true" role="dialog">
+  <div class="row">
+    <div class="login_help_dialog-new_user columns small-12 medium-6">
+      <h3>New to Jisho?</h3>
+
+      <a href="javascript:void(0)" class="js-login-help-sign-up">Click here to sign up!</a>
+    </div>
+
+    <div class="login_help_dialog-existing_user columns small-12 medium-6">
+      <h3>Have an account?</h3>
+
+      <p>We recently switched to a new login system. Please enter the email you registered with and follow the instructions.</p>
+
+      <form class="js-login-help-log-in" method="get" accept-charset="utf-8">
+        <p><input type="text" name="email" /></p>
+        <p><input type="submit" value="Log in" class="button"></p>
+      </form>
+    </div>
+  </div>
+
+  <a class="close-reveal-modal" aria-label="Close">&#215;</a>
+</div>
+
+  </body>
+</html>

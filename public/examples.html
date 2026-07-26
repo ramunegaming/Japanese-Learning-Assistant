@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Japanese Learning Assistant - Examples</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <h1>Japanese Learning Assistant</h1>
+        </div>
+        <button id="theme-toggle" aria-label="Toggle theme">
+            <i class="fas fa-lightbulb"></i>
+        </button>
+    </header>
+
+    <nav>
+        <a href="#search">Search</a>
+        <a href="#examples" class="active">Examples</a>
+        <a href="#history">History</a>
+        <a href="#favorites">Favorites</a>
+    </nav>
+
+    <main>
+        <div id="examples" class="page">
+            <h2>Example Sentences</h2>
+            <form id="search-form" class="search-form">
+                <input type="text" id="search-input" placeholder="Enter a word to find example sentences...">
+                <button type="submit" id="search-button">Search</button>
+            </form>
+            <div id="loading-spinner" class="hidden">Loading...</div>
+            <div id="results" class="results-container"></div>
+        </div>
+    </main>
+
+    <script type="module">
+        console.log('Script starting...');
+        try {
+            const { init, convertToFurigana } = await import('/services/furiganaService.js');
+            console.log('Module imported successfully');
+            
+            document.addEventListener('DOMContentLoaded', async () => {
+                const searchForm = document.getElementById('search-form');
+                const searchInput = document.getElementById('search-input');
+                const resultsContainer = document.getElementById('results');
+                const loadingSpinner = document.getElementById('loading-spinner');
+
+                console.log('Starting initialization...');
+                try {
+                    // Initialize furigana service
+                    const instance = await init();
+                    if (!instance) {
+                        throw new Error('Failed to initialize Kuroshiro instance');
+                    }
+                    console.log('Furigana service initialized successfully');
+                } catch (error) {
+                    console.error('Failed to initialize furigana service:', error);
+                    resultsContainer.innerHTML = '<p class="error">Failed to initialize furigana service. Please refresh the page and try again.</p>';
+                    return;
+                }
+
+                searchForm.addEventListener('submit', async (e) => {
+                    e.preventDefault();
+                    const searchTerm = searchInput.value.trim();
+                    
+                    if (!searchTerm) return;
+
+                    try {
+                        // Show loading spinner
+                        loadingSpinner.classList.remove('hidden');
+                        resultsContainer.innerHTML = '';
+
+                        console.log('Fetching sentences for:', searchTerm);
+                        const response = await fetch(`/api/search/sentences?keyword=${encodeURIComponent(searchTerm)}`);
+                        if (!response.ok) {
+                            throw new Error(`HTTP error! status: ${response.status}`);
+                        }
+                        const data = await response.json();
+                        console.log('Received data:', data);
+
+                        // Hide loading spinner
+                        loadingSpinner.classList.add('hidden');
+
+                        if (!data.data || data.data.length === 0) {
+                            resultsContainer.innerHTML = '<p class="no-results">No examples found. Try searching for a different word.</p>';
+                            return;
+                        }
+
+                        // Process each example with furigana
+                        const processedExamples = await Promise.all(data.data.map(async (item, index) => {
+                            try {
+                                console.log(`Converting example ${index} to furigana:`, item.japanese);
+                                // Convert Japanese text to furigana
+                                const furiganaHtml = await convertToFurigana(item.japanese);
+                                console.log(`Converted result for example ${index}:`, furiganaHtml);
+                                return {
+                                    ...item,
+                                    japanese: furiganaHtml
+                                };
+                            } catch (error) {
+                                console.error(`Error converting example ${index} to furigana:`, error);
+                                // Fallback to original text if conversion fails
+                                return item;
+                            }
+                        }));
+
+                        // Create results HTML
+                        const resultsHTML = processedExamples.map((item, index) => `
+                            <div class="example-item">
+                                <div class="japanese-text">${item.japanese}</div>
+                                <div class="english-text">${item.english}</div>
+                            </div>
+                        `).join('');
+
+                        resultsContainer.innerHTML = resultsHTML;
+                    } catch (error) {
+                        console.error('Error searching for examples:', error);
+                        loadingSpinner.classList.add('hidden');
+                        resultsContainer.innerHTML = `<p class="error">Error performing search. Please try again.</p>`;
+                    }
+                });
+            });
+        } catch (error) {
+            console.error('Failed to load furigana service module:', error);
+            document.getElementById('results').innerHTML = '<p class="error">Failed to load furigana service. Please check the console for errors and refresh the page.</p>';
+        }
+    </script>
+</body>
+</html>

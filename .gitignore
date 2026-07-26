@@ -1,0 +1,20 @@
+# --- Secrets — never commit ---
+.env
+.env.*
+
+# --- Node ---
+node_modules/
+
+# --- Runtime data (contains live Twitch usernames/scores, not code) ---
+favorites.json
+scores.json
+
+# --- Personal utility / debug artifacts ---
+backup.bat
+loadbackup.bat
+backup_info.txt
+debug_response.html
+backup/
+
+# --- Logs ---
+*.log

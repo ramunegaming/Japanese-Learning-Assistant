@@ -3,7 +3,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const searchInput = document.getElementById('search-input');
     const resultsContainer = document.getElementById('results');
     const loadingSpinner = document.getElementById('loading-spinner');
+<<<<<<< HEAD
     const API_BASE = 'http://localhost:3001';
+=======
+>>>>>>> origin/main
 
     searchForm.addEventListener('submit', async (e) => {
         e.preventDefault();
@@ -68,9 +71,17 @@ document.addEventListener('DOMContentLoaded', () => {
                     };
 
                     try {
+<<<<<<< HEAD
                         const response = await fetch(`${API_BASE}/api/favorites`, {
                             method: 'POST',
                             headers: { 'Content-Type': 'application/json' },
+=======
+                        const response = await fetch('/api/favorites', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                            },
+>>>>>>> origin/main
                             body: JSON.stringify(wordData)
                         });
 

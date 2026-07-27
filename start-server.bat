@@ -1,10 +1,16 @@
 @echo off
+<<<<<<< HEAD
 :: Run the OAuth refresher first
 call "C:\Users\RamuneGaming\CascadeProjects\Twitch OAuth\RunTokenManager.bat"
 
 cd /d %~dp0
 echo Starting Japanese Learning App Server...
 start /B node --no-deprecation server.js
+=======
+cd /d %~dp0
+echo Starting Japanese Learning App Server...
+start /B node server.js
+>>>>>>> origin/main
 
 :: Wait for the server to start (you can adjust this time if needed)
 timeout /t 2 /nobreak >nul

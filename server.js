@@ -1,6 +1,9 @@
 import express from 'express';
 import cors from 'cors';
+<<<<<<< HEAD
 import fs from 'fs/promises';
+=======
+>>>>>>> origin/main
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
 import path from 'path';
@@ -33,6 +36,7 @@ app.use('/node_modules', express.static(path.join(__dirname, 'node_modules')));
 app.use('/api', wordRoutes);
 app.use('/api', sentenceRoutes);
 
+<<<<<<< HEAD
 // Favorites endpoints
 const DATA_FILE = path.join(__dirname, 'favorites.json');
 fs.writeFile(DATA_FILE, JSON.stringify([])).then(() => {
@@ -61,6 +65,8 @@ app.post('/api/favorites/sync', async (req, res) => {
     }
 });
 
+=======
+>>>>>>> origin/main
 // Serve index.html for all other routes
 app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname, 'index.html'));

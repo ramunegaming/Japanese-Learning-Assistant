@@ -177,6 +177,14 @@ async function toggleFavorite(word, reading, meaning) {
             console.error('Error syncing favorites with server:', error);
         }
     } else {
+<<<<<<< HEAD
+=======
+        // Add to favorites if not at limit
+        if (favorites.length >= 5) {
+            alert('Maximum of 5 favorites allowed. Please remove some before adding more.');
+            return;
+        }
+>>>>>>> origin/main
         
         // Clean the meaning before adding
         const cleanedMeaning = cleanMeaning(meaning);

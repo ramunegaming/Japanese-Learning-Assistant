@@ -876,7 +876,7 @@ const handleFillBlankQuiz = async (
 const handleHelpCommand = (channel) => {
     client.say(
         channel,
-        '📖 Commands: !jisho [word] - look up a word | !japanesereview - see the latest 5 words | !scoreboard - view the leaderboard | !discord - Discord link | !japanesemode - toggle auto quizzes | !mylist - view your word list | !add [word] - add a Japanese word | !remove [word] - remove a word from your list | 🔒 Follow the channel to receive private results and notes via Twitch whispers!'
+        '📖 Commands: !jisho [word] - look up a word | !japanesereview - see the latest 5 words | !scoreboard - view the leaderboard | !discord - Discord link | !lurk - let us know you are lurking | !japanesemode - toggle auto quizzes | !mylist - view your word list | !add [word] - add a Japanese word | !remove [word] - remove a word from your list | 🔒 Follow the channel to receive private results and notes via Twitch whispers!'
     );
 };
 
@@ -1935,6 +1935,28 @@ if (message.toLowerCase() === '!followage' || message.toLowerCase().startsWith('
                     client.say(
                         channel,
                         "🎉 Join us on Discord: https://discord.gg/RaDBSntRZh"
+                    );
+                    break;
+
+                case '!brb':
+                    if (
+                        tags.username !==
+                            'ramunegaming' &&
+                        !tags.mod
+                    ) {
+                        return;
+                    }
+
+                    client.say(
+                        channel,
+                        "@ramunegaming is temporarily indisposed, back soon."
+                    );
+                    break;
+
+                case '!lurk':
+                    client.say(
+                        channel,
+                        `@${tags.username} can lurk like the best of them!`
                     );
                     break;
 

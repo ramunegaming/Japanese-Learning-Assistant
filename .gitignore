@@ -7,7 +7,11 @@ node_modules/
 
 # --- Runtime data (contains live Twitch usernames/scores, not code) ---
 favorites.json
+favorites-history.json
 scores.json
+study-stats.json
+mined-sentences.json
+grammar-notes.json
 
 # --- Personal utility / debug artifacts ---
 backup.bat

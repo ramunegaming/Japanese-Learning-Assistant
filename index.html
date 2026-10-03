@@ -44,6 +44,14 @@
                 <i class="fas fa-heart"></i>
                 Favorites
             </a>
+            <a href="#" class="nav-item" data-page="tracker">
+                <i class="fas fa-chart-column"></i>
+                Study Tracker
+            </a>
+            <a href="#" class="nav-item" data-page="notes">
+                <i class="fas fa-pen"></i>
+                Notes
+            </a>
         </div>
     </nav>
 
@@ -70,6 +78,12 @@
 
         <div id="history-page" class="page">
             <div id="history-list" class="results-container"></div>
+            <div class="search-container">
+                <div class="fav-header">
+                    <span class="fav-title">Mined sentences <span id="mined-counter">0</span></span>
+                </div>
+                <div id="mined-list"></div>
+            </div>
         </div>
 
         <div id="favorites-page" class="page">
@@ -86,9 +100,12 @@
                 </div>
                 <div class="fav-header">
                     <span class="fav-title">Favorites <span id="favorites-counter">0</span></span>
-                    <button id="flashcards-toggle" class="flashcards-toggle" aria-label="Toggle flashcards" title="Flashcards">
-                        <i class="fas fa-layer-group"></i>
-                    </button>
+                    <span class="fav-header-btns">
+                        <button id="tests-toggle" class="flashcards-toggle pt-toggle" aria-label="Prep tests" title="Prep tests">P.T</button>
+                        <button id="flashcards-toggle" class="flashcards-toggle" aria-label="Toggle flashcards" title="Flashcards">
+                            <i class="fas fa-layer-group"></i>
+                        </button>
+                    </span>
                 </div>
                 <div id="favorites-list-wrap">
                     <div id="favorites-list" class="results-container"></div>
@@ -97,6 +114,44 @@
                     <p class="flashcards-hint">Select cards, then press Begin.</p>
                     <div id="flashcards-checklist"></div>
                     <button id="flashcards-begin" class="flashcards-begin">Begin</button>
+                </div>
+                <div id="tests-setup" class="flashcards-pane" hidden>
+                    <div id="jlpt-selector" class="jlpt-selector">
+                        <button class="jlpt-pill" data-source="custom" title="Custom kanji set">Custom</button>
+                        <button class="jlpt-pill active" data-source="mine" title="Your favorites">Mine</button>
+                        <button class="jlpt-pill" data-source="5">N5</button>
+                        <button class="jlpt-pill" data-source="4">N4</button>
+                        <button class="jlpt-pill" data-source="3">N3</button>
+                        <button class="jlpt-pill" data-source="2">N2</button>
+                        <button class="jlpt-pill" data-source="1">N1</button>
+                    </div>
+                    <p class="flashcards-hint">Kakugo-style prep. Pick a mode.</p>
+                    <div id="tests-custom" hidden>
+                        <div id="tests-custom-list"></div>
+                        <button id="tests-custom-apply" class="flashcards-begin">Apply</button>
+                    </div>
+                    <div id="tests-modes"></div>
+                    <button id="tests-exam" class="flashcards-begin">Test (20)</button>
+                </div>
+                <div id="tests-viewer" class="flashcards-pane" hidden>
+                    <div id="tests-status" class="flashcard-status"></div>
+                    <div class="tests-card">
+                        <div id="tests-prompt-kanji" class="tests-prompt"></div>
+                        <div id="tests-prompt-sub" class="tests-prompt-sub"></div>
+                        <div id="tests-tags" class="flashcard-tags"></div>
+                    </div>
+                    <div id="tests-options" class="tests-options"></div>
+                    <div id="tests-confidence" class="tests-confidence" hidden>
+                        <span class="tests-conf-label">How sure?</span>
+                        <button id="tests-maybe" class="ghost-btn">Maybe</button>
+                        <button id="tests-certain" class="flashcards-begin">Certain</button>
+                    </div>
+                    <div id="tests-feedback" class="tests-feedback"></div>
+                    <div id="tests-review" class="tests-review"></div>
+                    <div class="flashcard-actions">
+                        <button id="tests-exit" class="ghost-btn">Modes</button>
+                        <button id="tests-next" class="flashcards-begin">Next -&gt;</button>
+                    </div>
                 </div>
                 <div id="flashcards-viewer" class="flashcards-pane" hidden>
                     <div id="flashcard-status" class="flashcard-status"></div>
@@ -122,6 +177,36 @@
                         <button id="flashcard-next" class="flashcards-begin">Next -&gt;</button>
                     </div>
                 </div>
+            </div>
+        </div>
+
+        <div id="tracker-page" class="page">
+            <div class="search-container tracker-container">
+                <div id="tracker-summary" class="tracker-summary"></div>
+                <div class="tracker-nav">
+                    <button class="dates-arrow" id="tracker-prev" aria-label="Previous year">&lt;</button>
+                    <button class="ghost-btn" id="tracker-today">T</button>
+                    <button class="dates-arrow" id="tracker-next" aria-label="Next year">&gt;</button>
+                </div>
+                <div id="tracker-heatmap" class="tracker-heatmap"></div>
+                <div id="tracker-year" class="tracker-year"></div>
+                <div id="tracker-stats" class="tracker-stats"></div>
+                <div id="tracker-detail" class="tracker-detail" hidden></div>
+            </div>
+        </div>
+
+        <div id="notes-page" class="page">
+            <div class="search-container">
+                <div class="notes-form">
+                    <input type="text" id="note-pattern" placeholder="Pattern (e.g. 〜てみる)">
+                    <input type="text" id="note-meaning" placeholder="Meaning">
+                    <input type="text" id="note-example" placeholder="Example sentence">
+                    <button id="note-add" class="flashcards-begin">Add note</button>
+                </div>
+                <div class="search-box">
+                    <input type="text" id="note-search" placeholder="Search notes...">
+                </div>
+                <div id="notes-list"></div>
             </div>
         </div>
     </main>

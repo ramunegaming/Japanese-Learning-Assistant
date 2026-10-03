@@ -698,3 +698,224 @@ main {
 .date-tab:hover { border-color: var(--primary-color); }
 .date-tab.active { background: var(--primary-color); color: #fff; }
 .date-tab .date-count { opacity: 0.75; font-size: 0.8rem; }
+
+.fav-header-btns { display: flex; gap: 0.5rem; align-items: center; }
+.pt-toggle { font-size: 0.85rem; font-weight: 700; width: auto; padding: 0 0.7rem; height: 40px; }
+
+/* === Tests (P.T prep, Favorites page only) === */
+#tests-modes[hidden] { display: none; }
+#tests-modes { display: flex; flex-direction: column; gap: 0.6rem; margin-bottom: 1rem; }
+.tests-mode-row {
+    display: flex; align-items: center; justify-content: space-between; gap: 0.75rem;
+    background: var(--card-background); border-radius: 8px; box-shadow: var(--shadow);
+    padding: 0.8rem 1rem; cursor: pointer; border: 2px solid transparent;
+    transition: all 0.2s ease; width: 100%; text-align: left;
+    color: var(--text-primary); font-size: 1rem;
+}
+.tests-mode-row:hover { border-color: var(--primary-color); }
+.tests-mode-row .tests-mode-desc { display: block; font-size: 0.85rem; color: var(--text-secondary); font-weight: 400; }
+.tests-card {
+    background: #fff; border-radius: 16px; box-shadow: var(--shadow);
+    padding: 2rem 1.5rem; text-align: center; margin-bottom: 1rem;
+}
+[data-theme="dark"] .tests-card { background: #f5f7fa; }
+.tests-prompt {
+    font-size: 3.5rem; font-weight: 500; color: #1a202c;
+    font-family: 'Noto Sans JP', sans-serif; line-height: 1.3;
+}
+.tests-prompt-sub { font-size: 1.2rem; color: #1a202c; margin-top: 0.25rem; line-height: 1.7; }
+#tests-tags { margin-top: 0.75rem; }
+.tests-options { display: flex; flex-direction: column; gap: 0.6rem; margin-bottom: 1rem; }
+.tests-option {
+    background: var(--card-background); border: 2px solid transparent; border-radius: 8px;
+    box-shadow: var(--shadow); padding: 0.8rem 1rem; cursor: pointer;
+    font-size: 1.05rem; color: var(--text-primary); text-align: center;
+    transition: all 0.2s ease; width: 100%;
+    font-family: 'Noto Sans JP', sans-serif;
+}
+.tests-option:hover:not(:disabled) { border-color: var(--primary-color); }
+.tests-option.selected { border-color: var(--primary-color); background: var(--hover-background); }
+.tests-option.correct { border-color: #27ae60; background: rgba(39,174,96,0.12); }
+.tests-option.wrong { border-color: #e74c3c; background: rgba(231,76,60,0.12); }
+.tests-option:disabled { cursor: default; }
+.tests-confidence { display: flex; align-items: center; justify-content: center; gap: 0.75rem; margin-bottom: 1rem; }
+.tests-confidence[hidden] { display: none; }
+.tests-conf-label { color: var(--text-secondary); }
+.tests-feedback { text-align: center; min-height: 1.6rem; margin-bottom: 0.5rem; font-weight: 600; }
+.tests-feedback.good { color: #27ae60; }
+.tests-feedback.bad { color: #e74c3c; }
+.tests-feedback.info { color: var(--text-secondary); }
+.tests-review { display: flex; flex-direction: column; gap: 0.4rem; margin: 0.5rem 0 1rem; }
+.tests-review-title { color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 0.25rem; text-align: center; }
+.tests-review-row {
+    display: flex; align-items: center; gap: 0.6rem;
+    background: var(--card-background); border: 2px solid transparent; border-radius: 8px;
+    box-shadow: var(--shadow); padding: 0.55rem 0.9rem; cursor: pointer;
+    color: var(--text-primary); font-size: 0.95rem; text-align: left; width: 100%;
+}
+.tests-review-row.ok { cursor: default; }
+.tests-review-row.miss:hover { border-color: var(--primary-color); }
+.tests-review-row.ok .tests-review-mark { color: #27ae60; font-weight: 700; }
+.tests-review-row.miss .tests-review-mark { color: #e74c3c; font-weight: 700; }
+.tests-explain {
+    background: var(--card-background); border-radius: 8px; box-shadow: var(--shadow);
+    padding: 0.8rem 1rem; font-size: 0.95rem; color: var(--text-primary);
+}
+.tests-explain-meaning { color: var(--text-secondary); margin: 0.15rem 0; }
+.tests-explain-picked { color: #e74c3c; margin: 0.25rem 0 0.5rem; }
+.tests-explain-jp { font-family: 'Noto Sans JP', sans-serif; font-size: 1.1rem; margin-top: 0.4rem; }
+.tests-explain-en { color: var(--text-secondary); margin-top: 0.15rem; }
+.tests-explain-loading { color: var(--text-secondary); font-style: italic; }
+
+/* === Study Tracker heatmap (Anki-style) === */
+.nav-item[data-page="tracker"] i { color: #9b59b6; }
+.tracker-container { position: relative; }
+.tracker-summary { text-align: center; font-size: 1.15rem; font-weight: 600; margin-bottom: 0.75rem; }
+.tracker-nav { display: flex; align-items: center; justify-content: center; gap: 0.6rem; margin-bottom: 0.75rem; }
+.tracker-heatmap {
+    background: var(--card-background); border-radius: 8px; box-shadow: var(--shadow);
+    padding: 1rem; overflow-x: auto;
+}
+.tracker-grid { display: flex; gap: 3px; min-width: max-content; margin: 0 auto; width: max-content; }
+.tracker-week { display: flex; flex-direction: column; gap: 3px; }
+.tracker-cell {
+    width: 13px; height: 13px; border-radius: 3px;
+    background: var(--hover-background);
+    cursor: pointer; border: none; padding: 0;
+}
+.tracker-cell.blank { background: transparent; cursor: default; }
+.tracker-cell.l0 { background: rgba(127,140,141,0.18); }
+.tracker-cell.l1 { background: #9ae6b4; }
+.tracker-cell.l2 { background: #68d391; }
+.tracker-cell.l3 { background: #38a169; }
+.tracker-cell.l4 { background: #276749; }
+.tracker-cell.today { outline: 2px solid var(--primary-color); outline-offset: 1px; }
+.tracker-cell.selected { outline: 2px solid #38a169; outline-offset: 1px; }
+.tracker-year { text-align: center; color: var(--text-secondary); margin-top: 0.5rem; }
+.tracker-stats {
+    display: flex; flex-wrap: wrap; gap: 1.25rem; justify-content: center;
+    margin-top: 0.75rem; color: var(--text-primary); font-size: 0.95rem;
+}
+.tracker-stats b { color: #38a169; }
+.tracker-detail {
+    background: var(--card-background); border-radius: 8px; box-shadow: var(--shadow);
+    padding: 1rem 1.25rem; margin-top: 1rem;
+}
+.tracker-detail[hidden] { display: none; }
+.tracker-detail h3 { margin-bottom: 0.4rem; font-size: 1.05rem; }
+.tracker-detail .td-break { color: var(--text-secondary); font-size: 0.92rem; margin-bottom: 0.5rem; }
+.tracker-detail ul { list-style: none; }
+.tracker-detail li { padding: 0.2rem 0; font-family: 'Noto Sans JP', sans-serif; }
+.tracker-tip {
+    position: fixed; z-index: 2000; pointer-events: none;
+    background: #1a202c; color: #fff; font-size: 0.8rem;
+    padding: 0.45rem 0.65rem; border-radius: 6px; max-width: 240px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3); display: none;
+}
+
+/* === JLPT level selector (Tests setup) === */
+.jlpt-selector {
+    display: flex; flex-wrap: wrap; gap: 0.5rem;
+    justify-content: center; align-items: center;
+    margin-bottom: 1rem;
+}
+.jlpt-pill {
+    padding: 0.45rem 1rem; border-radius: 999px;
+    border: 2px solid transparent;
+    background: var(--card-background); color: var(--text-primary);
+    box-shadow: var(--shadow); cursor: pointer; font-size: 0.9rem; font-weight: 600;
+    transition: all 0.2s ease;
+}
+.jlpt-pill:hover { border-color: var(--primary-color); }
+.jlpt-pill.active { background: var(--primary-color); color: #fff; }
+
+/* === Custom kanji picker (Tests setup) === */
+#tests-custom[hidden] { display: none; }
+.fc-section-head {
+    display: flex; align-items: center; gap: 0.5rem;
+    width: 100%; text-align: left; cursor: pointer;
+    font-weight: 700; font-size: 1rem; color: #38a169;
+    background: rgba(104, 211, 145, 0.14);
+    border: none;
+    padding: 0.45rem 0.7rem;
+    border-radius: 6px;
+    margin: 0.5rem 0 0.25rem;
+    font-family: inherit;
+}
+.fc-section-head:hover { background: rgba(104, 211, 145, 0.22); }
+.fc-section-arrow { font-size: 0.8rem; width: 1rem; }
+.fc-section-empty { color: var(--text-secondary); font-size: 0.9rem; padding: 0.3rem 0; }
+
+/* === Mined sentences + audio icons (same design language) === */
+.nav-item[data-page="notes"] i { color: #f39c12; }
+.example-icons {
+    position: absolute; top: 0.6rem; right: 0.9rem;
+    display: flex; gap: 0.9rem; z-index: 2;
+}
+.example-icons .icon-btn { background: none; }
+.example-icons .icon-btn.saved { color: #e6a817; }
+.word-head { display: flex; align-items: center; gap: 0.6rem; }
+.word-head h3 { margin-bottom: 0; }
+.word-speak { background: none; border: none; cursor: pointer; color: var(--primary-color); font-size: 1rem; padding: 4px; }
+.word-speak:hover { transform: scale(1.15); }
+#mined-counter { color: var(--text-secondary); font-weight: 400; font-size: 0.95rem; }
+#mined-list { display: flex; flex-direction: column; gap: 0.6rem; margin-top: 0.5rem; }
+.mined-card {
+    background: var(--card-background); border-radius: 8px;
+    box-shadow: var(--shadow); padding: 0.9rem 1.1rem; position: relative;
+}
+.mined-jp { font-size: 1.25rem; font-family: 'Noto Sans JP', sans-serif; }
+.mined-en { color: var(--text-secondary); margin-top: 0.2rem; }
+.mined-meta { color: var(--text-secondary); font-size: 0.8rem; margin-top: 0.35rem; }
+.mined-remove {
+    position: absolute; top: 0.6rem; right: 0.8rem;
+    background: none; border: none; cursor: pointer; color: var(--text-secondary);
+}
+.mined-remove:hover { color: #e74c3c; }
+
+/* === Grammar notes === */
+.notes-form {
+    display: flex; flex-direction: column; gap: 0.6rem;
+    background: var(--card-background); border-radius: 8px;
+    box-shadow: var(--shadow); padding: 1rem; margin-bottom: 1rem;
+}
+.notes-form input {
+    padding: 0.7rem; font-size: 1rem;
+    border: 2px solid var(--primary-color); border-radius: 8px;
+    background-color: var(--input-background); color: var(--text-primary);
+}
+#notes-list { display: flex; flex-direction: column; gap: 0.6rem; margin-top: 0.5rem; }
+.note-card {
+    background: var(--card-background); border-radius: 8px;
+    box-shadow: var(--shadow); padding: 0.9rem 1.1rem; position: relative;
+}
+.note-pattern { font-size: 1.25rem; font-weight: 600; font-family: 'Noto Sans JP', sans-serif; }
+.note-meaning { margin-top: 0.15rem; }
+.note-example { color: var(--text-secondary); margin-top: 0.25rem; font-family: 'Noto Sans JP', sans-serif; }
+.note-remove {
+    position: absolute; top: 0.6rem; right: 0.8rem;
+    background: none; border: none; cursor: pointer; color: var(--text-secondary);
+}
+.note-remove:hover { color: #e74c3c; }
+
+/* === Weak list (Tests setup) === */
+#tests-weak { margin-bottom: 1rem; }
+.tests-weak-head { font-weight: 700; margin-bottom: 0.4rem; }
+.tests-weak-row {
+    display: flex; align-items: center; gap: 0.7rem;
+    background: var(--card-background); border-radius: 8px; box-shadow: var(--shadow);
+    padding: 0.55rem 0.9rem; margin-bottom: 0.4rem; cursor: pointer;
+    border: 2px solid transparent; width: 100%; text-align: left;
+    color: var(--text-primary); font-size: 1rem; font-family: 'Noto Sans JP', sans-serif;
+}
+.tests-weak-row:hover { border-color: #e74c3c; }
+.tests-weak-miss { margin-left: auto; font-size: 0.85rem; color: #e74c3c; font-family: sans-serif; }
+#tests-custom-list {
+    background: var(--card-background);
+    border-radius: 8px;
+    box-shadow: var(--shadow);
+    padding: 0.75rem 1rem;
+    margin-bottom: 1rem;
+    max-height: 320px;
+    overflow-y: auto;
+}

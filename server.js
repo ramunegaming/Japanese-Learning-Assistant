@@ -91,6 +91,78 @@ app.post('/api/favorites/history', async (req, res) => {
     }
 });
 
+// Study Tracker stats (tiny per-day counters, idle-aware on the client)
+const STUDY_FILE = path.join(__dirname, 'study-stats.json');
+await ensureFile(STUDY_FILE, '{}');
+
+app.get('/api/study/stats', async (req, res) => {
+    try {
+        const raw = await fs.readFile(STUDY_FILE, 'utf8');
+        res.json(JSON.parse(raw));
+    } catch (err) {
+        if (err.code === 'ENOENT') { res.json({}); }
+        else res.status(500).json({ error: 'Failed to load study stats' });
+    }
+});
+
+app.post('/api/study/stats', async (req, res) => {
+    try {
+        const { stats } = req.body;
+        if (!stats || typeof stats !== 'object' || Array.isArray(stats))
+            return res.status(400).json({ error: 'Stats must be an object' });
+        await fs.writeFile(STUDY_FILE, JSON.stringify(stats, null, 2));
+        res.json({ success: true });
+    } catch (err) {
+        res.status(500).json({ error: 'Failed to save study stats' });
+    }
+});
+
+// Mined sentences + grammar notes (tiny personal collections)
+const MINES_FILE = path.join(__dirname, 'mined-sentences.json');
+const NOTES_FILE = path.join(__dirname, 'grammar-notes.json');
+await ensureFile(MINES_FILE);
+await ensureFile(NOTES_FILE);
+
+app.get('/api/mines', async (req, res) => {
+    try {
+        res.json(JSON.parse(await fs.readFile(MINES_FILE, 'utf8')));
+    } catch (err) {
+        if (err.code === 'ENOENT') { res.json([]); }
+        else res.status(500).json({ error: 'Failed to load mines' });
+    }
+});
+
+app.post('/api/mines', async (req, res) => {
+    try {
+        const { mines } = req.body;
+        if (!Array.isArray(mines)) return res.status(400).json({ error: 'Mines must be an array' });
+        await fs.writeFile(MINES_FILE, JSON.stringify(mines, null, 2));
+        res.json({ success: true });
+    } catch (err) {
+        res.status(500).json({ error: 'Failed to save mines' });
+    }
+});
+
+app.get('/api/notes', async (req, res) => {
+    try {
+        res.json(JSON.parse(await fs.readFile(NOTES_FILE, 'utf8')));
+    } catch (err) {
+        if (err.code === 'ENOENT') { res.json([]); }
+        else res.status(500).json({ error: 'Failed to load notes' });
+    }
+});
+
+app.post('/api/notes', async (req, res) => {
+    try {
+        const { notes } = req.body;
+        if (!Array.isArray(notes)) return res.status(400).json({ error: 'Notes must be an array' });
+        await fs.writeFile(NOTES_FILE, JSON.stringify(notes, null, 2));
+        res.json({ success: true });
+    } catch (err) {
+        res.status(500).json({ error: 'Failed to save notes' });
+    }
+});
+
 // Serve index.html for all other routes
 app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname, 'index.html'));

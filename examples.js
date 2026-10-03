@@ -43,6 +43,35 @@ async function initializeSentenceExampleSearch() {
 
       const processed = await processSentence(example);
 
+      // Plain text for audio + mining (furigana HTML untouched for display)
+      const rawJp = (example.japanese && example.japanese.raw)
+        || String(processed.japanese).replace(/<[^>]*>/g, '');
+      const plainEn = processed.english;
+
+      const icons = document.createElement('div');
+      icons.className = 'example-icons';
+      const speakBtn = document.createElement('button');
+      speakBtn.className = 'icon-btn';
+      speakBtn.setAttribute('aria-label', 'Play audio');
+      speakBtn.innerHTML = '<i class="fas fa-volume-up"></i>';
+      speakBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        if (window.speakJapanese) window.speakJapanese(rawJp);
+      });
+      const mineBtn = document.createElement('button');
+      mineBtn.className = 'icon-btn' + (window.isMined && window.isMined(rawJp, plainEn) ? ' saved' : '');
+      mineBtn.setAttribute('aria-label', 'Mine sentence');
+      mineBtn.title = 'Mine sentence';
+      mineBtn.innerHTML = '<i class="fas fa-bookmark"></i>';
+      mineBtn.addEventListener('click', () => {
+        if (!window.toggleMine) return;
+        const saved = window.toggleMine(rawJp, plainEn);
+        mineBtn.classList.toggle('saved', saved);
+      });
+      icons.appendChild(speakBtn);
+      icons.appendChild(mineBtn);
+      exampleDiv.appendChild(icons);
+
       const jp = document.createElement('div');
       jp.className = 'japanese-text';
       jp.innerHTML = processed.japanese;
@@ -74,6 +103,7 @@ async function initializeSentenceExampleSearch() {
     try {
       const results = await searchExamples(query);
       await displayResults(results);
+      if (window.logStudy) window.logStudy('sentences');
     } catch (err) {
       console.error('Search failed:', err);
       resultsContainer.innerHTML = '<div class="no-results">Error fetching examples</div>';

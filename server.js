@@ -1,14 +1,11 @@
 import express from 'express';
 import cors from 'cors';
-<<<<<<< HEAD
 import fs from 'fs/promises';
-=======
->>>>>>> origin/main
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
 import path from 'path';
 
-// ✅ Add this block to load the CommonJS Twitch bot script
+// loads the CommonJS Twitch bot script
 import { createRequire } from 'module';
 const require = createRequire(import.meta.url);
 require('./twitch-bot.cjs'); // Runs your Twitch bot
@@ -36,12 +33,18 @@ app.use('/node_modules', express.static(path.join(__dirname, 'node_modules')));
 app.use('/api', wordRoutes);
 app.use('/api', sentenceRoutes);
 
-<<<<<<< HEAD
-// Favorites endpoints
-const DATA_FILE = path.join(__dirname, 'favorites.json');
-fs.writeFile(DATA_FILE, JSON.stringify([])).then(() => {
-    console.log('Favorites cleared on server start');
-});
+// Favorites endpoints (website full history + today-only bot file — both tiny JSON)
+const DATA_FILE = path.join(__dirname, 'favorites.json'); // today only, read by Twitch bot (untouched)
+const HISTORY_FILE = path.join(__dirname, 'favorites-history.json'); // full dated history for website
+async function ensureFile(file, fallback = '[]') {
+    try {
+        await fs.access(file);
+    } catch (err) {
+        if (err.code === 'ENOENT') await fs.writeFile(file, fallback);
+    }
+}
+await ensureFile(DATA_FILE);
+await ensureFile(HISTORY_FILE);
 
 app.get('/api/favorites', async (req, res) => {
     try {
@@ -65,8 +68,29 @@ app.post('/api/favorites/sync', async (req, res) => {
     }
 });
 
-=======
->>>>>>> origin/main
+// Full dated history for the website (tiny). Bot never reads this.
+app.get('/api/favorites/history', async (req, res) => {
+    try {
+        const raw = await fs.readFile(HISTORY_FILE, 'utf8');
+        res.json(JSON.parse(raw));
+    } catch (err) {
+        if (err.code === 'ENOENT') { res.json([]); }
+        else res.status(500).json({ error: 'Failed to load history' });
+    }
+});
+
+app.post('/api/favorites/history', async (req, res) => {
+    try {
+        const { favorites } = req.body;
+        if (!Array.isArray(favorites))
+            return res.status(400).json({ error: 'Favorites must be an array' });
+        await fs.writeFile(HISTORY_FILE, JSON.stringify(favorites, null, 2));
+        res.json({ success: true });
+    } catch (err) {
+        res.status(500).json({ error: 'Failed to save history' });
+    }
+});
+
 // Serve index.html for all other routes
 app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname, 'index.html'));

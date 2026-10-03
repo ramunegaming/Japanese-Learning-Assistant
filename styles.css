@@ -532,3 +532,169 @@ main {
         width: 100%;
     }
 }
+
+/* === Flashcards (Favorites page only, additive — furigana styles untouched) === */
+.fav-container { position: relative; }
+.fav-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+}
+.fav-title { font-size: 1.1rem; font-weight: 600; color: var(--text-primary); }
+#favorites-counter { color: var(--text-secondary); font-weight: 400; font-size: 0.95rem; }
+.flashcards-toggle {
+    background: var(--card-background);
+    border: 2px solid var(--primary-color);
+    border-radius: 8px;
+    width: 40px; height: 40px;
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    color: var(--primary-color);
+    box-shadow: var(--shadow);
+    transition: all 0.3s ease;
+}
+.flashcards-toggle:hover { transform: scale(1.08); }
+.flashcards-toggle.active { background: var(--primary-color); color: #fff; }
+.flashcards-pane { transition: opacity 0.25s ease; }
+.flashcards-pane[hidden] { display: none; }
+#favorites-list-wrap { transition: opacity 0.25s ease; }
+#favorites-list-wrap[hidden] { display: none; }
+.flashcards-hint { color: var(--text-secondary); margin-bottom: 0.75rem; }
+#flashcards-checklist {
+    background: var(--card-background);
+    border-radius: 8px;
+    box-shadow: var(--shadow);
+    padding: 0.75rem 1rem;
+    margin-bottom: 1rem;
+    max-height: 320px;
+    overflow-y: auto;
+}
+.fc-check-row {
+    display: flex; align-items: center; gap: 0.6rem;
+    padding: 0.45rem 0;
+    border-bottom: 1px solid rgba(127,140,141,0.2);
+}
+.fc-check-row:last-child { border-bottom: none; }
+.fc-check-row input { width: 18px; height: 18px; accent-color: var(--primary-color); }
+.fc-check-row .fc-word { font-weight: 600; font-family: 'Noto Sans JP', sans-serif; }
+.fc-check-row .fc-meaning { color: var(--text-secondary); font-size: 0.95rem; }
+.flashcards-begin {
+    padding: 0.75rem 2rem;
+    background-color: var(--primary-color);
+    color: white; border: none; border-radius: 8px;
+    cursor: pointer; font-size: 1rem;
+    transition: background-color 0.3s ease;
+}
+.flashcards-begin:hover { background-color: var(--primary-color-hover); }
+.flashcards-begin:disabled { opacity: 0.5; cursor: not-allowed; }
+.flashcard-status { color: var(--text-secondary); margin-bottom: 0.6rem; text-align: center; }
+.flashcard {
+    background: transparent;
+    box-shadow: none;
+    min-height: 340px;
+    display: flex; align-items: stretch; justify-content: center;
+    cursor: pointer;
+    position: relative;
+    perspective: 1200px;
+}
+.flashcard-icons { position: absolute; top: 1rem; right: 1.25rem; display: flex; gap: 1rem; z-index: 3; }
+.icon-btn { background: rgba(255,255,255,0.85); border: none; border-radius: 6px; cursor: pointer; color: #4a5568; font-size: 1rem; padding: 4px 6px; }
+.icon-btn:hover { color: var(--primary-color); }
+.flashcard-inner {
+    width: 100%;
+    display: grid;
+    transform-style: preserve-3d;
+    transition: transform 0.6s cubic-bezier(0.4, 0.1, 0.2, 1);
+}
+.flashcard.flipped .flashcard-inner { transform: rotateX(180deg); }
+.flashcard.no-anim .flashcard-inner { transition: none; }
+.flashcard-face {
+    grid-area: 1 / 1;
+    width: 100%;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 340px;
+    background: #fff;
+    border-radius: 16px;
+    box-shadow: var(--shadow);
+    padding: 3rem 1.5rem 2rem;
+}
+[data-theme="dark"] .flashcard-face { background: #f5f7fa; }
+.flashcard-front { transform: rotateX(0deg); }
+.flashcard-back { transform: rotateX(180deg); }
+.flashcard-jp {
+    font-size: 3rem; font-weight: 500; color: #1a202c;
+    font-family: 'Noto Sans JP', sans-serif; line-height: 1.4;
+    word-break: break-word;
+}
+.flashcard-reading { font-size: 1.8rem; color: #1a202c; font-family: 'Noto Sans JP', sans-serif; margin-bottom: 0.25rem; }
+.flashcard-meaning { font-size: 1.6rem; color: #1a202c; margin-bottom: 1rem; }
+.flashcard-kanji { max-width: 520px; margin: 0 auto 1rem; color: #1a202c; font-size: 1.05rem; line-height: 1.7; }
+.fc-kanji-meta { font-size: 0.9rem; color: #4a5568; margin-bottom: 0.4rem; }
+.fc-kanji-row { font-size: 1.05rem; }
+.fc-kanji-label { font-weight: 700; color: #4a5568; }
+.flashcard-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; justify-content: center; }
+.fc-tag {
+    font-size: 0.8rem; font-weight: 600;
+    padding: 0.3rem 0.7rem; border-radius: 6px;
+    background: #4a5568; color: #fff;
+}
+.fc-tag-pos { background: #4a5568; }
+.fc-tag-common { background: #68d391; color: #1a202c; }
+.fc-tag-jlpt { background: #9ae6b4; color: #1a202c; }
+.fc-tag-freq { background: #63b3ed; color: #1a202c; }
+.flashcard-actions { display: flex; justify-content: space-between; align-items: center; margin-top: 1rem; }
+.ghost-btn {
+    background: transparent; border: 1px solid var(--primary-color);
+    color: var(--primary-color); border-radius: 8px;
+    padding: 0.7rem 1.2rem; cursor: pointer; font-size: 0.95rem;
+}
+
+/* === Date carousel (favorites + flashcard setup) === */
+.dates-carousel {
+    display: flex; align-items: center; gap: 0.5rem;
+    margin-bottom: 1rem;
+}
+.dates-carousel[hidden] { display: none; }
+.dates-arrow {
+    flex: 0 0 auto;
+    width: 36px; height: 36px;
+    border-radius: 50%;
+    border: 2px solid var(--primary-color);
+    background: var(--card-background);
+    color: var(--primary-color);
+    font-size: 1.1rem; font-weight: 700;
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    transition: all 0.2s ease;
+}
+.dates-arrow:hover { background: var(--primary-color); color: #fff; }
+.dates-strip {
+    flex: 1;
+    display: flex; gap: 0.5rem;
+    overflow-x: auto;
+    scroll-behavior: smooth;
+    padding: 0.25rem 0;
+    scrollbar-width: thin;
+}
+.date-tab {
+    flex: 0 0 auto;
+    padding: 0.5rem 1.1rem;
+    border-radius: 999px;
+    border: 2px solid transparent;
+    background: var(--card-background);
+    color: var(--text-primary);
+    box-shadow: var(--shadow);
+    cursor: pointer;
+    font-size: 0.9rem;
+    white-space: nowrap;
+    transition: all 0.2s ease;
+}
+.date-tab:hover { border-color: var(--primary-color); }
+.date-tab.active { background: var(--primary-color); color: #fff; }
+.date-tab .date-count { opacity: 0.75; font-size: 0.8rem; }

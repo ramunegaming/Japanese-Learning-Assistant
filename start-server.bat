@@ -1,24 +1,33 @@
 @echo off
-<<<<<<< HEAD
-:: Run the OAuth refresher first
+
+echo ============================================
+echo Starting Twitch Token Manager...
+echo ============================================
+
 call "C:\Users\RamuneGaming\CascadeProjects\Twitch OAuth\RunTokenManager.bat"
 
-cd /d %~dp0
+if errorlevel 1 (
+    echo.
+    echo ❌ Twitch token manager failed.
+    echo ❌ Bot will NOT be started.
+    echo.
+    pause
+    exit /b 1
+)
+
+echo.
+echo ============================================
 echo Starting Japanese Learning App Server...
+echo ============================================
+
+cd /d "C:\Users\RamuneGaming\CascadeProjects\jisho-app"
+
 start /B node --no-deprecation server.js
-=======
-cd /d %~dp0
-echo Starting Japanese Learning App Server...
-start /B node server.js
->>>>>>> origin/main
 
-:: Wait for the server to start (you can adjust this time if needed)
-timeout /t 2 /nobreak >nul
+timeout /t 8 /nobreak >nul
 
-:: Ask if you want to open the website
 set /p open_website="Do you want me to open the website as well? Y/N: "
 
-:: Check the input and decide whether to open the website
 if /I "%open_website%"=="Y" (
     start chrome --new-window http://localhost:3001/
     echo Server and Chrome window launched successfully!
